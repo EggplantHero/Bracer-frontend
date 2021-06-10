@@ -10,14 +10,10 @@ import {
 } from "react-grid-dnd";
 import useViewport from "../../utils/viewport";
 
-const BreederBoxes = ({ setSelected }) => {
+const BreederBoxes = ({ setSelected, config }) => {
   const dispatch = useDispatch(reorderBreeders);
   const breeders = useSelector(getBreeders);
-  const [config, setConfig] = useState(false);
   const { gridSize } = useViewport();
-  const height = (gridSize) => {
-    return gridSize === 6 ? "400px" : "600px";
-  };
 
   const onChange = (sourceId, sourceIndex, targetIndex, targetId) => {
     const nextState = swap(breeders, sourceIndex, targetIndex);
@@ -31,7 +27,7 @@ const BreederBoxes = ({ setSelected }) => {
         className="d-flex justify-content-start"
         boxesPerRow={gridSize}
         rowHeight={100}
-        style={{ height: height }}
+        style={{ height: "400px" }}
       >
         {breeders.map((breeder) => (
           <GridItem key={breeder.id}>
@@ -43,9 +39,6 @@ const BreederBoxes = ({ setSelected }) => {
           </GridItem>
         ))}
       </GridDropZone>
-      <button className="btn btn-danger" onClick={() => setConfig(!config)}>
-        Mass Delete
-      </button>
     </GridContextProvider>
   );
 };

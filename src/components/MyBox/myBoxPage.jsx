@@ -8,6 +8,8 @@ import BreederInspect from "./breederInspect";
 const MyBoxPage = () => {
   const dispatch = useDispatch();
   const [selected, setSelected] = useState("");
+  const [config, setConfig] = useState(false);
+
   const onEnter = (state) => {
     setSelected(state);
     dispatch(addBreeder(state));
@@ -24,8 +26,17 @@ const MyBoxPage = () => {
           </div>
           <div className="col-12 col-lg-6">
             <p>Your box contents:</p>
-            <BreederBoxes setSelected={setSelected}></BreederBoxes>
+            <BreederBoxes
+              setSelected={setSelected}
+              config={config}
+            ></BreederBoxes>
             <BreederInspect selected={selected}></BreederInspect>
+            <button
+              className="btn btn-danger"
+              onClick={() => setConfig(!config)}
+            >
+              Mass Delete
+            </button>
           </div>
         </div>
       </div>
