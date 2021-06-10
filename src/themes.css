@@ -1,0 +1,128 @@
+body[data-theme=dark] {
+  --display: none;
+  --primary-color: rgb(47, 49, 54);
+  --text-color: rgb(215, 213, 217);
+  --text-color-muted: rgb(130, 130, 130);
+  --text-color-white: rgb(225, 225, 225);
+  --card-bg-color: rgb(54, 57, 63);
+  --nav-bg-color: rgb(41, 43, 47);
+  --nav-bg-color-alt: rgb(41, 43, 47);
+  --nav-bg-color-active: rgb(54, 57, 63);
+  --input-bg-color: rgb(64, 68, 75);
+  --border-color: rgb(64, 68, 75);
+  --dropdown-active: rgb(8, 80, 160);
+  --btn-bg-color: rgb(18, 94, 135);
+}
+
+body[data-theme=light] {
+  --display: auto;
+  --primary-color: rgb(237, 240, 244);
+  --text-color: #111111;
+  --text-color-white: rgb(245, 245, 245);
+  --text-color-muted: #888888;
+  --card-bg-color: #f8f9fa;
+  --nav-bg-color: rgb(243, 245, 246);
+  --nav-bg-color-alt: rgb(21, 103, 159);
+  --nav-bg-color-active: rgb(225, 225, 225);
+  --input-bg-color: rgb(255, 255, 255);
+  --border-color: #e8e8e8;
+  --dropdown-active: rgb(10, 108, 213);
+  --btn-bg-color: rgb(21, 103, 159);
+}
+
+body#body {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  transition-property: background-color, color, border;
+}
+
+nav,
+footer {
+  background-color: var(--nav-bg-color-alt);
+  border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+nav {
+  color: var(--text-color-white);
+}
+
+.sidenav {
+  background-color: var(--nav-bg-color);
+  border: 1px solid rgba(0, 0, 0, 0.125);
+}
+.sidenav a.active {
+  background-color: var(--nav-bg-color-active);
+}
+.sidenav a {
+  color: var(--text-color);
+}
+.sidenav a:hover {
+  color: var(--text-color-muted);
+}
+.sidenav a:focus {
+  color: var(--text-color);
+}
+
+div.card {
+  background-color: var(--card-bg-color);
+}
+div.card input,
+div.card input:active,
+div.card input:focus {
+  color: var(--text-color);
+  background-color: var(--input-bg-color);
+  border-color: var(--border-color);
+}
+div.card input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+div.card input:disabled {
+  background-color: var(--nav-bg-color);
+  border-color: var(--nav-bg-color);
+  color: var(--text-color-muted);
+}
+div.card input[type=range] {
+  background-color: var(--card-bg-color);
+}
+div.card .input-group-text-custom {
+  color: var(--text-color);
+  background-color: var(--nav-bg-color);
+  border-color: var(--border-color);
+}
+div.card div.rbt input.rbt-input-hint[style] {
+  display: none;
+}
+div.card div.rbt #typeahead {
+  background-color: var(--input-bg-color);
+}
+div.card div.rbt #typeahead a {
+  color: var(--text-color);
+}
+div.card div.rbt #typeahead a:hover,
+div.card div.rbt #typeahead .dropdown-item.active {
+  background-color: var(--dropdown-active);
+  color: var(--text-color);
+}
+div.card .badge {
+  background-color: rgba(0, 0, 0, 0.35);
+}
+
+.btn-submit {
+  color: var(--text-color-white);
+  background-color: var(--btn-bg-color);
+}
+
+.imageParent {
+  border-color: var(--border-color);
+  background-color: var(--input-bg-color);
+}
+
+p,
+h5,
+h6,
+label,
+.form-control {
+  color: var(--text-color);
+}
+
+/*# sourceMappingURL=themes.css.map */

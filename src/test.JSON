@@ -1,0 +1,60 @@
+{
+  "target": {
+    "data": {
+      "name": "Pikachu",
+      "ivs": {
+        "hp": { "value": 31, "active": true },
+        "atk": { "value": 31, "active": true },
+        "def": { "value": 31, "active": true },
+        "spa": { "value": 31, "active": true },
+        "spd": { "value": 31, "active": true },
+        "spe": { "value": 31, "active": true }
+      },
+      "nature": { "value": "adamant", "active": true },
+      "eggGroups": ["Field", "Fairy"],
+      "gender": "male",
+      "possibleGenders": ["male", "female"],
+      "breeder": true
+    }
+  },
+  "breeders": [
+    {
+      "id": 1,
+      "data": {
+        "name": "Pikachu",
+        "ivs": {
+          "hp": { "value": 31, "active": true },
+          "atk": { "value": 0, "active": true },
+          "def": { "value": 0, "active": true },
+          "spa": { "value": 0, "active": true },
+          "spd": { "value": 0, "active": true },
+          "spe": { "value": 0, "active": true }
+        },
+        "nature": { "value": "adamant", "active": true },
+        "eggGroups": ["Field", "Fairy"],
+        "gender": "male",
+        "possibleGenders": ["male", "female"],
+        "breeder": true
+      }
+    },
+    {
+      "id": 2,
+      "data": {
+        "name": "Pikachu",
+        "ivs": {
+          "hp": { "value": 0, "active": true },
+          "atk": { "value": 31, "active": true },
+          "def": { "value": 0, "active": true },
+          "spa": { "value": 0, "active": true },
+          "spd": { "value": 0, "active": true },
+          "spe": { "value": 0, "active": true }
+        },
+        "nature": { "value": "adamant", "active": true },
+        "eggGroups": ["Field", "Fairy"],
+        "gender": "female",
+        "possibleGenders": ["male", "female"],
+        "breeder": true
+      }
+    }
+  ]
+}

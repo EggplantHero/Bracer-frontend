@@ -1,13 +1,142 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@font-face {
+  font-family: "PKMN-ds";
+  src: local("PKMN-ds"), url("./fonts/pokemon-ds-font.ttf") format("truetype");
+  font-weight: normal;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  font-family: "PKMN-ds";
+  font-size: 160%;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.overlay {
+  position: fixed;
+  z-index: 6;
+  top: 0;
+  left: 0;
+  height: 95vh;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+input.form-control,
+label {
+  font-size: 86%;
+}
+
+#typeahead {
+  font-size: 76%;
+}
+
+.badge {
+  font-weight: normal;
+}
+
+.imageParent {
+  width: 128px;
+  height: 128px;
+  line-height: 128px;
+  border: 1px solid;
+  border-radius: 0.25rem;
+}
+
+.iconParent {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  margin: auto;
+}
+
+.treeCell {
+  height: 120px;
+  margin: 1px;
+}
+
+.relative {
+  position: relative;
+}
+
+.canvas {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+nav {
+  height: 70px;
+  z-index: 10;
+}
+.navbar-offset {
+  height: 69px;
+}
+
+.wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.sidenav {
+  width: 250px;
+  position: fixed;
+  height: 100%;
+  top: 69;
+  z-index: 7;
+  display: flex;
+  align-items: flex-start;
+  transition: all 0.5s;
+}
+
+.sidenav ul {
+  width: 100%;
+}
+
+.sidenav-collapsed {
+  left: -100%;
+}
+
+.sidenav-active {
+  left: 0;
+}
+
+.breederContainerMini {
+  width: 80px;
+  height: 80px;
+}
+
+.breederContainerMini button {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+}
+
+.inputRange {
+  width: 100%;
+}
+
+.green {
+  color: limegreen;
+}
+.red {
+  color: tomato;
+}
+
+.male {
+  color: rgb(90, 193, 254) !important;
+}
+.female {
+  color: rgb(255, 108, 226) !important;
+}
+.genderless {
+  color: grey !important;
+}
+
+footer {
+  z-index: 8;
+  height: 50px;
 }
