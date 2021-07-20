@@ -24,7 +24,7 @@ function getGridSize() {
     case "lg":
       return 6;
     default:
-      return 6;
+      return 8;
   }
 }
 

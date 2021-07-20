@@ -1,13 +1,15 @@
 body[data-theme="dark"] {
-  --input-range-thumb-color-yellow: gold;
   --input-range-thumb-color-green: mediumseagreen;
+  --input-range-thumb-color-lime: yellowgreen;
+  --input-range-thumb-color-yellow: gold;
   --input-range-thumb-color-red: tomato;
   --input-range-thumb-color-orange: orange;
   --input-range-track-color: rgb(96, 98, 104);
 }
 body[data-theme="light"] {
-  --input-range-thumb-color-yellow: gold;
   --input-range-thumb-color-green: mediumseagreen;
+  --input-range-thumb-color-lime: yellowgreen;
+  --input-range-thumb-color-yellow: gold;
   --input-range-thumb-color-red: tomato;
   --input-range-thumb-color-orange: orange;
   --input-range-track-color: rgb(201, 201, 201);
@@ -42,14 +44,17 @@ input[type="range"]::-webkit-slider-thumb {
 input[type="range"].green::-webkit-slider-thumb {
   background: var(--input-range-thumb-color-green);
 }
+input[type="range"].lime::-webkit-slider-thumb {
+  background: var(--input-range-thumb-color-lime);
+}
 input[type="range"].yellow::-webkit-slider-thumb {
   background: var(--input-range-thumb-color-yellow);
 }
-input[type="range"].red::-webkit-slider-thumb {
-  background: var(--input-range-thumb-color-red);
-}
 input[type="range"].orange::-webkit-slider-thumb {
   background: var(--input-range-thumb-color-orange);
+}
+input[type="range"].red::-webkit-slider-thumb {
+  background: var(--input-range-thumb-color-red);
 }
 
 input[type="range"]:focus::-webkit-slider-runnable-track {

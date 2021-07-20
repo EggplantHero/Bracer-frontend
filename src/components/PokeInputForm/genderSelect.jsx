@@ -5,6 +5,7 @@ import { genderIcons } from "../../utils/remap";
 const GenderSelect = () => {
   const [formState, setFormState] = useContext(FormContext);
   const { possibleGenders } = formState;
+
   return (
     <div>
       {possibleGenders.map((gender) => (

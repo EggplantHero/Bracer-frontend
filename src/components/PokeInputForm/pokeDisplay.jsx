@@ -17,12 +17,12 @@ const PokeLookup = () => {
 
   return (
     <div className="my-3">
-      <div className="col-12 col-sm-6 col-md-4 offset-md-4 d-inline-block">
+      <div className="col-12 col-md-4 offset-md-4 d-inline-block">
         <div className="mx-auto imageParent bordered">
           <img className="pe-none" src={url} alt="" />
         </div>
       </div>
-      <div className="col-sm-6 col-md-4 d-inline-block mt-2">
+      <div className="col-md-4 d-inline-block mt-2">
         <div className="mx-3">
           {poke.eggGroups.map((group, index) => (
             <p key={index} className="badge d-block">

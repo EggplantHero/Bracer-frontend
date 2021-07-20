@@ -10,6 +10,8 @@ const InputRange = ({ stat }) => {
     switch (value) {
       case 31:
         return "green";
+      case 30:
+        return "lime";
       case 0:
         return "orange";
       case -1:

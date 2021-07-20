@@ -15,16 +15,9 @@ const slice = createSlice({
     collapseSidebar: (ui) => {
       ui.expanded = !ui.expanded;
     },
-    changePage: (ui, action) => {
-      ui.page += action.payload;
-    },
   },
 });
 
-export const getPage = createSelector(
-  (state) => state.ui,
-  (ui) => ui.page
-);
 export const getMode = createSelector(
   (state) => state.ui,
   (ui) => ui.dark
@@ -35,4 +28,4 @@ export const getSidebar = createSelector(
 );
 
 export default slice.reducer;
-export const { toggleDarkMode, changePage, collapseSidebar } = slice.actions;
+export const { toggleDarkMode, collapseSidebar } = slice.actions;

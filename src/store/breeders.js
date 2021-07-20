@@ -9,10 +9,16 @@ const slice = createSlice({
       return (breeders = action.payload);
     },
     addBreeder: (breeders, action) => {
-      breeders.push({ id: Date.now(), data: action.payload });
+      breeders.push({
+        id: Date.now() + Math.floor(Math.random() * 100),
+        data: action.payload,
+      });
     },
     removeBreeder: (breeders, action) => {
       return breeders.filter((breeder) => breeder.id !== action.payload);
+    },
+    removeBreeders: (breeders, action) => {
+      return breeders.filter((breeder) => action.payload.includes(breeder.id));
     },
   },
 });

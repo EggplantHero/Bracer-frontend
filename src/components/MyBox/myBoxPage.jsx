@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addBreeder } from "../../store/breeders";
+import breeders, { addBreeder } from "../../store/breeders";
 import PokeInputForm from "../PokeInputForm/pokeInputForm";
 import BreederBoxes from "./breederBoxes";
 import BreederInspect from "./breederInspect";
@@ -26,17 +26,17 @@ const MyBoxPage = () => {
           </div>
           <div className="col-12 col-lg-6">
             <p>Your box contents:</p>
-            <BreederBoxes
-              setSelected={setSelected}
-              config={config}
-            ></BreederBoxes>
             <BreederInspect selected={selected}></BreederInspect>
             <button
               className="btn btn-danger"
               onClick={() => setConfig(!config)}
             >
-              Mass Delete
+              Multiselect
             </button>
+            <BreederBoxes
+              setSelected={setSelected}
+              config={config}
+            ></BreederBoxes>
           </div>
         </div>
       </div>

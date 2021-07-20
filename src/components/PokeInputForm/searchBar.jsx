@@ -32,7 +32,7 @@ const SearchBar = () => {
       ...formState,
       eggGroups,
       possibleGenders,
-      gender: "",
+      gender: possibleGenders[0],
       name: input[0],
     });
   };
