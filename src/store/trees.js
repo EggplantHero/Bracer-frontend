@@ -10,8 +10,8 @@ const slice = createSlice({
     },
     addTree: (trees, action) => {
       trees.push({
-        id: Date.now() + Math.floor(Math.random() * 100),
-        data: action.payload,
+        id: action.payload.id,
+        data: action.payload.data,
       });
     },
     removeTree: (trees, action) => {

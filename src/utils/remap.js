@@ -90,3 +90,7 @@ export const summarizeIvs = (ivs) => {
 export const getTargetFromTree = (tree) => {
   return tree.data[Object.keys(tree.data).length][0].data;
 };
+
+export const createId = () => {
+  return Date.now() + Math.floor(Math.random() * 100)
+}

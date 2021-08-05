@@ -14,7 +14,7 @@ const TreeCell = ({ poke, level, index }) => {
       setSprite(response);
     };
     fetchImgSm();
-  }, []);
+  }, [name]);
 
   return (
     <div className="card">

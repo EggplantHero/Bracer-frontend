@@ -8,7 +8,7 @@ import Navbar from "./components/navbar";
 import SideNav from "./components/sideNav";
 import Target from "./components/newBreed";
 import MyBox from "./components/MyBox/myBoxPage";
-import History from "./components/history";
+import History from "./components/History/history";
 import NotFound from "./components/notFound";
 import Footer from "./components/footer";
 
