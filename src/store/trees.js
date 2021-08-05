@@ -1,10 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createSelector } from "reselect";
-import exampleTree from "../utils/exampleTree.json";
 
 const slice = createSlice({
   name: "Trees",
-  initialState: [exampleTree],
+  initialState: [],
   reducers: {
     reorderTrees: (trees, action) => {
       return (trees = action.payload);

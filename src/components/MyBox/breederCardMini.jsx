@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { genderIcons } from "../../utils/remap";
+import { genderIcons, summarizeIvs } from "../../utils/remap";
 import { getImgSm } from "../../utils/pokeApi";
 import { useDispatch } from "react-redux";
 import { removeBreeder } from "../../store/breeders";
@@ -19,16 +19,6 @@ const BreederCardMini = ({ breeder, config, setSelected }) => {
     setImg();
   }, [name]);
 
-  const countIvs = (num) => {
-    let count = 0;
-    for (const iv in ivs) {
-      if (ivs[iv] === num) {
-        count++;
-      }
-    }
-    return count;
-  };
-
   return (
     <div className="breederContainerMini card">
       <h6 className="my-0">
@@ -41,11 +31,8 @@ const BreederCardMini = ({ breeder, config, setSelected }) => {
       >
         <img src={url} alt="" className="pe-none"></img>
       </button>
-      <h6>
-        {countIvs(31) !== 0 && `${countIvs(31)}x31`}{" "}
-        {countIvs(30) !== 0 && `${countIvs(30)}x30`}{" "}
-        {countIvs(0) !== 0 && `${countIvs(0)}x0`}
-      </h6>
+
+      <h6>{summarizeIvs(ivs)}</h6>
       <div className="d-flex justify-content-end">
         {config && (
           // <button

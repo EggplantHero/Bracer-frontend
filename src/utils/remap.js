@@ -1,13 +1,9 @@
-import {
-  FaMars,
-  FaVenus,
-  FaGenderless,
-} from "react-icons/fa";
+import { FaMars, FaVenus, FaGenderless } from "react-icons/fa";
 
 export const genderIcons = {
-  male: { icon: <FaMars/>, color: "rgb(90,193,254)" },
-  female: { icon: <FaVenus/>, color: "rgb(255,108,226)" },
-  genderless: { icon: <FaGenderless/>, color: "grey" },
+  male: { icon: <FaMars />, color: "rgb(90,193,254)" },
+  female: { icon: <FaVenus />, color: "rgb(255,108,226)" },
+  genderless: { icon: <FaGenderless />, color: "grey" },
 };
 
 export function mapBreederSchema(object) {
@@ -67,3 +63,30 @@ export function ivClass(iv) {
       break;
   }
 }
+
+const countIvs = (num, ivs) => {
+  let count = 0;
+  for (const iv in ivs) {
+    if (ivs[iv] === num) {
+      count++;
+    }
+  }
+  return count;
+};
+
+export const summarizeIvs = (ivs) => {
+  const values = [31, 30, 0];
+  const results = { 31: 0, 30: 0, 0: 0 };
+  values.map((value) => (results[value] = countIvs(value, ivs)));
+  let string = ``;
+  values.forEach((value) => {
+    if (results[value] !== 0) {
+      string += `${results[value]}x${value} `;
+    }
+  });
+  return string;
+};
+
+export const getTargetFromTree = (tree) => {
+  return tree.data[Object.keys(tree.data).length][0].data;
+};

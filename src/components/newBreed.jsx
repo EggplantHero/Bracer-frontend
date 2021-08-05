@@ -2,14 +2,31 @@ import React from "react";
 import PokeInputForm from "./PokeInputForm/pokeInputForm";
 import { useDispatch } from "react-redux";
 import { getJson, setTarget } from "../store/target";
+import { getBreeders } from "../store/breeders";
+import { addTree } from "../store/trees";
 import { useSelector } from "react-redux";
+import http from "../services/httpService";
 
 const NewBreedPage = () => {
-  const json = useSelector(getJson);
   const dispatch = useDispatch();
-  const onEnter = (state) => {
+  // const json = useSelector(getJson);
+  const breeders = useSelector(getBreeders);
+
+  const onEnter = async (state) => {
     dispatch(setTarget(state));
-    console.log(json);
+    //TODO: change hardcoded url to env
+    // const url = `${process.env.REACT_APP_API_URL}/api/boxbreed/`;
+    const url = `https://bracer.app/api/boxbreed/`;
+    const payload = JSON.stringify({ target: { data: state }, breeders });
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+    const { data } = await http.post(url, payload, config);
+    console.log("RESPONSE:", data);
+    dispatch(addTree(data));
   };
 
   return (
