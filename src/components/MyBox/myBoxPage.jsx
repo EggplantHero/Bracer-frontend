@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import breeders, { addBreeder } from "../../store/breeders";
+import { addBreeder } from "../../store/breeders";
 import PokeInputForm from "../PokeInputForm/pokeInputForm";
 import BreederBoxes from "./breederBoxes";
 import BreederInspect from "./breederInspect";
+import SelectionTools from "./selectionTools";
 
 const MyBoxPage = () => {
   const dispatch = useDispatch();
   const [selected, setSelected] = useState("");
-  const [config, setConfig] = useState(false);
+  const [config, setConfig] = useState("inspect");
 
   const onEnter = (state) => {
     setSelected(state);
@@ -27,12 +28,7 @@ const MyBoxPage = () => {
           <div className="col-12 col-lg-6">
             <p>Your box contents:</p>
             <BreederInspect selected={selected}></BreederInspect>
-            <button
-              className="btn btn-danger"
-              onClick={() => setConfig(!config)}
-            >
-              Multiselect
-            </button>
+            <SelectionTools config={config} setConfig={setConfig} />
             <BreederBoxes
               setSelected={setSelected}
               config={config}

@@ -9,8 +9,8 @@ import GenderSelect from "./genderSelect";
 
 const PokeInputForm = ({ onEnter }) => {
   const state = useState(initialState);
-  const [valid, setValid] = useState(false);
   const [formState] = state;
+  const [valid, setValid] = useState(false);
 
   useEffect(() => {
     const valid = validate(formState, schema);

@@ -21,34 +21,23 @@ const BreederCardMini = ({ breeder, config, setSelected }) => {
 
   return (
     <div className="breederContainerMini card">
-      <h6 className="my-0">
-        <span className={gender}>{genderIcons[gender].icon}</span>
-        {breeder.data.name}
-      </h6>
       <button
-        className="btn mx-1 my-2"
-        onClick={() => setSelected(breeder.data)}
+        className="btn"
+        onClick={() => {
+          config === "inspect"
+            ? setSelected(breeder.data)
+            : console.log("delete");
+        }}
       >
-        <img src={url} alt="" className="pe-none"></img>
+        <h6 className="my-0 d-flex justify-content-center">
+          <span className={gender}>{genderIcons[gender].icon}</span>
+          <span>{breeder.data.name}</span>
+        </h6>
+        <div>
+          <img src={url} alt="" className="pe-none"></img>
+        </div>
+        <h6>{summarizeIvs(ivs)}</h6>
       </button>
-
-      <h6>{summarizeIvs(ivs)}</h6>
-      <div className="d-flex justify-content-end">
-        {config && (
-          // <button
-          //   className="btn btn-danger btn-sm"
-          //   onClick={() => dispatch(removeBreeder(id))}
-          // >
-          //   <BsTrash />
-          // </button>
-          <input
-            type="checkbox"
-            onChange={() => {
-              console.log("checked");
-            }}
-          />
-        )}
-      </div>
     </div>
   );
 };
