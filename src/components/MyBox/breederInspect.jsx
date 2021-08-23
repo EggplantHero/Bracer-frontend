@@ -1,14 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { getImg } from "../../utils/pokeApi";
+import { useDispatch, useSelector } from "react-redux";
+import { addBreeder, getBreeders } from "../../store/breeders";
 import { ivClass, genderIcons } from "../../utils/remap";
+import { getSelectedIds, getSelectedTool, setSelectedId } from "../../store/ui";
 
-const BreederInspect = ({ selected }) => {
+const BreederInspect = () => {
   const [url, setUrl] = useState("");
+  const selectedIds = useSelector(getSelectedIds);
+  const breeders = useSelector(getBreeders);
+  const [selected] = breeders.filter(
+    (breeder) => breeder.id === selectedIds[0]
+  );
+  console.log(selected);
 
   useEffect(() => {
     if (!selected) return;
     const getImage = async () => {
-      const url = await getImg(selected.name);
+      const url = await getImg(selected.data.name);
       setUrl(url);
     };
     getImage();
@@ -20,10 +29,10 @@ const BreederInspect = ({ selected }) => {
         <div className="card-title">
           {selected && (
             <h4 className="my-2">
-              <span className={selected.gender}>
-                {genderIcons[selected.gender].icon}
+              <span className={selected.data.gender}>
+                {genderIcons[selected.data.gender].icon}
               </span>
-              {selected.name}
+              {selected.data.name}
             </h4>
           )}
         </div>
@@ -36,7 +45,7 @@ const BreederInspect = ({ selected }) => {
           <div className="col-sm-6 col-md-4 d-inline-block mt-2">
             <div className="mx-3">
               {selected &&
-                selected.eggGroups.map((group, index) => (
+                selected.data.eggGroups.map((group, index) => (
                   <p key={index} className="badge d-block">
                     {group}
                   </p>
@@ -45,12 +54,12 @@ const BreederInspect = ({ selected }) => {
           </div>
           <div className="d-flex justify-content-center">
             {selected &&
-              Object.keys(selected.ivs).map((iv) => (
+              Object.keys(selected.data.ivs).map((iv) => (
                 <div key={iv}>
-                  {selected.ivs[iv] !== -1 && (
+                  {selected.data.ivs[iv] !== -1 && (
                     <p className="p-2 mx-2">
-                      <span className={ivClass(selected.ivs[iv])}>
-                        {selected.ivs[iv]}
+                      <span className={ivClass(selected.data.ivs[iv])}>
+                        {selected.data.ivs[iv]}
                       </span>
                       {` ${iv.toUpperCase()}`}
                     </p>

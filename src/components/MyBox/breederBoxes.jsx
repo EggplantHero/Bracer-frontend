@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import BreederCardMini from "./breederCardMini";
 import { useDispatch, useSelector } from "react-redux";
 import { getBreeders, reorderBreeders } from "../../store/breeders";
+import { addSelectedId, removeSelectedId, setSelectedId } from "../../store/ui";
 import {
   GridContextProvider,
   GridDropZone,
@@ -10,7 +11,7 @@ import {
 } from "react-grid-dnd";
 import useViewport from "../../utils/viewport";
 
-const BreederBoxes = ({ setSelected, config }) => {
+const BreederBoxes = ({ setSelected }) => {
   const dispatch = useDispatch(reorderBreeders);
   const breeders = useSelector(getBreeders);
   const [slicedBreeders, setSlicedBreeders] = useState([]);
@@ -54,11 +55,7 @@ const BreederBoxes = ({ setSelected, config }) => {
         >
           {slicedBreeders.map((breeder) => (
             <GridItem key={breeder.id}>
-              <BreederCardMini
-                breeder={breeder}
-                setSelected={setSelected}
-                config={config}
-              ></BreederCardMini>
+              <BreederCardMini breeder={breeder}></BreederCardMini>
             </GridItem>
           ))}
         </GridDropZone>

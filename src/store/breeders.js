@@ -18,7 +18,7 @@ const slice = createSlice({
       return breeders.filter((breeder) => breeder.id !== action.payload);
     },
     removeBreeders: (breeders, action) => {
-      return breeders.filter((breeder) => action.payload.includes(breeder.id));
+      return breeders.filter((breeder) => !action.payload.includes(breeder.id));
     },
   },
 });
@@ -29,4 +29,5 @@ export const getBreeders = createSelector(
 );
 
 export default slice.reducer;
-export const { reorderBreeders, addBreeder, removeBreeder } = slice.actions;
+export const { reorderBreeders, addBreeder, removeBreeder, removeBreeders } =
+  slice.actions;

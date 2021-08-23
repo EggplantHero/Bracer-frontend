@@ -104,9 +104,19 @@ nav {
   left: 0;
 }
 
-.outline {
+.btn:focus {
+  box-shadow: none;
+}
+
+.outline-blue,
+.outline-blue:focus {
   outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(0, 119, 255, 0.699);
+  box-shadow: 0 0 0 0.2rem rgb(51, 160, 187);
+}
+.outline-red,
+.outline-red:focus {
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgb(184, 81, 98);
 }
 
 .breederContainerMini {

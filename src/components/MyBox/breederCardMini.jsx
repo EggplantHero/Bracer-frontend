@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { genderIcons, summarizeIvs } from "../../utils/remap";
 import { getImgSm } from "../../utils/pokeApi";
-import { useDispatch } from "react-redux";
-import { removeBreeder } from "../../store/breeders";
-import { BsTrash } from "react-icons/bs";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addSelectedId,
+  removeSelectedId,
+  getSelectedIds,
+  setSelectedId,
+  getSelectedTool,
+} from "../../store/ui";
 
-const BreederCardMini = ({ breeder, config, setSelected }) => {
+const BreederCardMini = ({ breeder }) => {
   const dispatch = useDispatch();
+  const selectedIds = useSelector(getSelectedIds);
+  const selectedTool = useSelector(getSelectedTool);
   const { data, id } = breeder;
   const { name, ivs, gender } = data;
   const [url, setUrl] = useState("");
@@ -19,16 +26,28 @@ const BreederCardMini = ({ breeder, config, setSelected }) => {
     setImg();
   }, [name]);
 
+  const handleSelection = () => {
+    if (selectedTool === "inspect") {
+      dispatch(setSelectedId(breeder.id));
+    } else {
+      if (selectedIds.includes(breeder.id)) {
+        dispatch(removeSelectedId(breeder.id));
+      } else {
+        dispatch(addSelectedId(breeder.id));
+      }
+    }
+  };
+
+  const isSelected = () => {
+    const selected = selectedIds.includes(breeder.id);
+    if (selected) {
+      return `outline-${selectedTool === "inspect" ? "blue" : "red"}`;
+    } else return "";
+  };
+
   return (
     <div className="breederContainerMini card">
-      <button
-        className="btn"
-        onClick={() => {
-          config === "inspect"
-            ? setSelected(breeder.data)
-            : console.log("delete");
-        }}
-      >
+      <button className={`btn ${isSelected()}`} onClick={handleSelection}>
         <h6 className="my-0 d-flex justify-content-center">
           <span className={gender}>{genderIcons[gender].icon}</span>
           <span>{breeder.data.name}</span>
