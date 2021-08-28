@@ -34,9 +34,9 @@ const Tree = ({ treeid }) => {
           levels.map((level) => (
             <div
               key={level}
-              className="col-2 d-inline-block d-flex flex-column justify-content-between text-center"
+              className="col-2 d-inline-block d-flex flex-column justify-content-around text-center"
             >
-              <br></br>
+              {/* <br></br> */}
               {tree.data[level].map((poke, index) => (
                 <div key={level + index}>
                   {poke.data && (
@@ -48,6 +48,7 @@ const Tree = ({ treeid }) => {
                   )}
                 </div>
               ))}
+              {/* <br></br> */}
             </div>
           ))}
         <canvas className="canvas" ref={canvasRef}></canvas>

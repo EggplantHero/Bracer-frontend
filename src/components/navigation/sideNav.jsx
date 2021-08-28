@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { getSidebar } from "../store/ui";
+import { getSidebar } from "../../store/ui";
 import { CgPokemon } from "react-icons/cg";
 import { FaBoxOpen } from "react-icons/fa";
 import { BsClockHistory } from "react-icons/bs";
-import { getTrees } from "../store/trees";
+import { getTrees } from "../../store/trees";
 import HistoryNavItem from "./historyNavItem";
 
 const SideNav = () => {
@@ -45,15 +45,17 @@ const SideNav = () => {
             </NavLink>
           );
         })}
-        {trees.map((tree) => (
-          <NavLink
-            className="nav-item nav-link"
-            to={`/history/${tree.id}`}
-            key={tree.id}
-          >
-            <HistoryNavItem tree={tree} />
-          </NavLink>
-        ))}
+        <div className="sidenav-overflow">
+          {trees.map((tree) => (
+            <NavLink
+              className="nav-item nav-link"
+              to={`/history/${tree.id}`}
+              key={tree.id}
+            >
+              <HistoryNavItem tree={tree} />
+            </NavLink>
+          ))}
+        </div>
       </ul>
     </div>
   );

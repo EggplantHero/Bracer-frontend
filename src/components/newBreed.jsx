@@ -13,7 +13,7 @@ const NewBreedPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const trees = useSelector(getTrees);
-  console.log("TREES", trees);
+  console.log("TREES", JSON.stringify(trees));
   const breeders = useSelector(getBreeders);
 
   const onEnter = async (state) => {
@@ -28,6 +28,7 @@ const NewBreedPage = () => {
         "Access-Control-Allow-Origin": "*",
       },
     };
+    console.log("POST REQUESTING:", payload);
     const { data } = await http.post(url, payload, config);
     console.log("RESPONSE:", data);
 

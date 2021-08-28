@@ -62,6 +62,10 @@ nav {
 .sidenav a:focus {
   color: var(--text-color);
 }
+.sidenav .sidenav-overflow {
+  height: calc(100vh - 300px);
+  overflow-y: scroll;
+}
 
 div.card {
   background-color: var(--card-bg-color);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { summarizeIvs, getTargetFromTree } from "../utils/remap";
-import { getImgSm } from "../utils/pokeApi";
+import { summarizeIvs, getTargetFromTree } from "../../utils/remap";
+import { getImgSm } from "../../utils/pokeApi";
 
 const HistoryNavItem = ({ tree }) => {
   const [target, setTarget] = useState({});

@@ -17,7 +17,7 @@ const TreeCell = ({ poke, level, index }) => {
   }, [name]);
 
   return (
-    <div className="card">
+    <div className="card treeCell">
       <div className="d-flex justify-content-center">
         {gender && (
           <h5

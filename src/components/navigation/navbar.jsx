@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { useDispatch } from "react-redux";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { collapseSidebar } from "../store/ui";
+import { collapseSidebar } from "../../store/ui";
 
 const Navbar = () => {
   const dispatch = useDispatch();
