@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { getImgSm } from "../../utils/pokeApi";
-import capitalize from "../../utils/capitalize";
+// import capitalize from "../../utils/capitalize";
 import { genderIcons } from "../../utils/remap";
 
 const TreeCell = ({ poke, level, index }) => {
   const { name, ivs, gender } = poke.data;
   const [sprite, setSprite] = useState("");
-  const ivKeys = Object.keys(ivs);
+
+  const ivKeys = ["hp", "atk", "def", "spa", "spd", "spe"];
 
   useEffect(() => {
     const fetchImgSm = async () => {
