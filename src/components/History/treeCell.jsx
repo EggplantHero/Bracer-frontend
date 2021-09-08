@@ -1,24 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { getImgSm } from "../../utils/pokeApi";
+import { getImgSm, getAllBraceIcons } from "../../utils/pokeApi";
 // import capitalize from "../../utils/capitalize";
-import { genderIcons } from "../../utils/remap";
+import { genderIcons, statColors } from "../../utils/remap";
 
-const TreeCell = ({ poke, level, index }) => {
-  const { name, ivs, gender } = poke.data;
+const TreeCell = ({ poke, level, index, treeId }) => {
+  const { name, ivs, gender, item, breeder } = poke.data;
   const [sprite, setSprite] = useState("");
+  const [braces, setBraces] = useState([]);
 
   const ivKeys = ["hp", "atk", "def", "spa", "spd", "spe"];
 
   useEffect(() => {
-    const fetchImgSm = async () => {
-      const response = await getImgSm(name);
-      setSprite(response);
+    const onLoad = async () => {
+      setSprite(await getImgSm(name));
+      setBraces(await getAllBraceIcons());
     };
-    fetchImgSm();
+    onLoad();
   }, [name]);
 
   return (
-    <div className="card treeCell">
+    <div
+      className="card treeCell"
+      // style={{ backgroundColor: breeder && "lightgreen" }}
+    >
       <div className="d-flex justify-content-center">
         {gender && (
           <h5
@@ -29,19 +33,26 @@ const TreeCell = ({ poke, level, index }) => {
             {genderIcons[gender].icon}
           </h5>
         )}
-        <h5>{name}</h5>
+        <h5>{name ? name : "..."}</h5>
+        {/* <button onClick={() => console.log(level, index, treeId)}>edit</button> */}
       </div>
-      <div>
+      <div className="d-flex justify-content-center mb-3">
         <img src={sprite} alt="" />
+        <img src={braces[item]} alt="" />
       </div>
-      {ivKeys.map(
-        (iv) =>
-          ivs[iv] !== -1 && (
-            <h6 key={iv}>
-              {iv.toUpperCase()}: {ivs[iv]}
-            </h6>
-          )
-      )}
+      <div className="container-fluid">
+        <div className="row">
+          {ivKeys.map((iv) => (
+            <div key={iv} className="col-4 card ivCell">
+              {ivs[iv] !== -1 && (
+                <h6 style={{ color: statColors[iv] }}>
+                  {ivs[iv]} {iv.toUpperCase()}
+                </h6>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

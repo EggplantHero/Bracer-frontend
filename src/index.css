@@ -53,8 +53,12 @@ label {
 }
 
 .treeCell {
-  height: 140px;
   margin: 5px;
+  max-width: 250px;
+}
+.ivCell {
+  height: 38px;
+  padding: 0px;
 }
 
 .relative {

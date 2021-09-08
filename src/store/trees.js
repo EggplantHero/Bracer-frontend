@@ -20,6 +20,9 @@ const slice = createSlice({
     removeTrees: (trees, action) => {
       return trees.filter((tree) => action.payload.includes(tree.id));
     },
+    // editBreederName: (trees, action) => {
+      
+    // }
   },
 });
 

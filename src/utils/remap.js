@@ -92,5 +92,14 @@ export const getTargetFromTree = (tree) => {
 };
 
 export const createId = () => {
-  return Date.now() + Math.floor(Math.random() * 100)
-}
+  return Date.now() + Math.floor(Math.random() * 100);
+};
+
+export const statColors = {
+  hp: "rgb(81, 200, 91)",
+  atk: "rgb(236, 109, 112)",
+  def: "rgb(231,174,101)",
+  spa: "rgb(242,97,244)",
+  spd: "rgb(233,222,106)",
+  spe: "rgb(103,209,232)",
+};
