@@ -20,9 +20,14 @@ const slice = createSlice({
     removeTrees: (trees, action) => {
       return trees.filter((tree) => action.payload.includes(tree.id));
     },
-    // editBreederName: (trees, action) => {
-      
-    // }
+    editBreeder: (trees, action) => {
+      const { level, index, treeId } = action.payload;
+      const tree = trees.find((tree) => {
+        return tree.id === treeId;
+      });
+      tree.data[level][index].data.breeder =
+        !tree.data[level][index].data.breeder;
+    },
   },
 });
 
@@ -32,4 +37,4 @@ export const getTrees = createSelector(
 );
 
 export default slice.reducer;
-export const { reorderTrees, addTree, removeTree } = slice.actions;
+export const { reorderTrees, addTree, removeTree, editBreeder } = slice.actions;

@@ -12,6 +12,7 @@ body[data-theme=dark] {
   --border-color: rgb(64, 68, 75);
   --dropdown-active: rgb(8, 80, 160);
   --btn-bg-color: rgb(18, 94, 135);
+  --treeCell-bg-color: rgb(82, 156, 94);
 }
 
 body[data-theme=light] {
@@ -28,6 +29,7 @@ body[data-theme=light] {
   --border-color: #e8e8e8;
   --dropdown-active: rgb(10, 108, 213);
   --btn-bg-color: rgb(21, 103, 159);
+  --treeCell-bg-color: lightgreen;
 }
 
 body#body {
@@ -109,6 +111,16 @@ div.card div.rbt #typeahead .dropdown-item.active {
 }
 div.card .badge {
   background-color: rgba(0, 0, 0, 0.35);
+}
+div.card button {
+  color: var(--text-color);
+}
+div.card button:hover {
+  color: var(--text-color-muted);
+}
+
+div.card.treeCellBg {
+  background-color: var(--treeCell-bg-color);
 }
 
 .btn-submit {

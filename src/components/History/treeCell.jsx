@@ -2,9 +2,14 @@ import React, { useEffect, useState } from "react";
 import { getImgSm, getAllBraceIcons } from "../../utils/pokeApi";
 // import capitalize from "../../utils/capitalize";
 import { genderIcons, statColors } from "../../utils/remap";
+import { BiEdit } from "react-icons/bi";
+import { ImCheckboxUnchecked, ImCheckboxChecked } from "react-icons/im";
+import { editBreeder } from "../../store/trees";
+import { useDispatch } from "react-redux";
 
 const TreeCell = ({ poke, level, index, treeId }) => {
   const { name, ivs, gender, item, breeder } = poke.data;
+  const dispatch = useDispatch();
   const [sprite, setSprite] = useState("");
   const [braces, setBraces] = useState([]);
 
@@ -19,10 +24,7 @@ const TreeCell = ({ poke, level, index, treeId }) => {
   }, [name]);
 
   return (
-    <div
-      className="card treeCell"
-      // style={{ backgroundColor: breeder && "lightgreen" }}
-    >
+    <div className={`card treeCell ${breeder && "treeCellBg"}`}>
       <div className="d-flex justify-content-center">
         {gender && (
           <h5
@@ -33,12 +35,18 @@ const TreeCell = ({ poke, level, index, treeId }) => {
             {genderIcons[gender].icon}
           </h5>
         )}
-        <h5>{name ? name : "..."}</h5>
-        {/* <button onClick={() => console.log(level, index, treeId)}>edit</button> */}
+        <div className="d-flex">
+          <h5>{name ? name : "..."}</h5>
+        </div>
       </div>
+
       <div className="d-flex justify-content-center mb-3">
-        <img src={sprite} alt="" />
-        <img src={braces[item]} alt="" />
+        <div>
+          <img src={sprite} alt="" />
+        </div>
+        <div>
+          <img src={braces[item]} alt="" />
+        </div>
       </div>
       <div className="container-fluid">
         <div className="row">
@@ -51,6 +59,15 @@ const TreeCell = ({ poke, level, index, treeId }) => {
               )}
             </div>
           ))}
+          <div>
+            <button
+              className="btn"
+              onClick={() => dispatch(editBreeder({ level, index, treeId }))}
+            >
+              Completed:{" "}
+              {breeder ? <ImCheckboxChecked /> : <ImCheckboxUnchecked />}
+            </button>
+          </div>
         </div>
       </div>
     </div>
