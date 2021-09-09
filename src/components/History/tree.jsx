@@ -37,6 +37,16 @@ const Tree = ({ treeid }) => {
   const canvasRef = useRef(null);
   console.log("levels", levels);
 
+  const emptyPoke = {
+    data: {
+      name: "...",
+      ivs: { hp: 1, atk: 1, def: 1, spa: 1, spd: 1, spe: 1 },
+      gender: "a",
+      item: "a",
+      breeder: true,
+    },
+  };
+
   return (
     <div className="user-select-none">
       <div className="d-flex justify-content-center relative">
@@ -50,7 +60,7 @@ const Tree = ({ treeid }) => {
             >
               {tree.data[level].map((poke, index) => (
                 <div key={level + index}>
-                  {poke.data && (
+                  {poke.data ? (
                     <TreeCell
                       poke={poke}
                       level={level}
@@ -58,10 +68,11 @@ const Tree = ({ treeid }) => {
                       treeId={tree.id}
                       allPokes={allPokes}
                     ></TreeCell>
+                  ) : (
+                    <div className="card treeCell treeCellBg"></div>
                   )}
                 </div>
               ))}
-              {/* <br></br> */}
             </div>
           ))}
         <canvas className="canvas" ref={canvasRef}></canvas>

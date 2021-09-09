@@ -64,9 +64,12 @@ const TreeCell = ({ poke, level, index, treeId, allPokes }) => {
                     className={`mx-1 btn btn-outline-secondary ${g}${
                       gender === g ? " active" : ""
                     }`}
-                    onClick={() =>
-                      dispatch(editBreeder({ index, level, treeId, gender: g }))
-                    }
+                    onClick={() => {
+                      dispatch(
+                        editBreeder({ index, level, treeId, gender: g })
+                      );
+                      setInputVisible(!inputVisible);
+                    }}
                   >
                     {genderIcons[g].icon}
                   </button>
@@ -93,7 +96,6 @@ const TreeCell = ({ poke, level, index, treeId, allPokes }) => {
           <BiEdit />
         </button>
       </div>
-
       <div className="d-flex justify-content-center mb-3">
         <div>
           <img src={sprite} alt="" />
