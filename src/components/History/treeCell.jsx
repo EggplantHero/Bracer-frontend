@@ -4,14 +4,19 @@ import { getImgSm, getAllBraceIcons } from "../../utils/pokeApi";
 import { genderIcons, statColors } from "../../utils/remap";
 import { BiEdit } from "react-icons/bi";
 import { ImCheckboxUnchecked, ImCheckboxChecked } from "react-icons/im";
-import { editBreeder } from "../../store/trees";
+import { editBreeder, toggleBreeder } from "../../store/trees";
 import { useDispatch } from "react-redux";
+import { Typeahead } from "react-bootstrap-typeahead";
+import "react-bootstrap-typeahead/css/Typeahead.css";
 
-const TreeCell = ({ poke, level, index, treeId }) => {
+const TreeCell = ({ poke, level, index, treeId, allPokes }) => {
   const { name, ivs, gender, item, breeder } = poke.data;
   const dispatch = useDispatch();
   const [sprite, setSprite] = useState("");
   const [braces, setBraces] = useState([]);
+  const [selectedGender, setSelectedGender] = useState(gender);
+  // const [input, setInput] = useState("");
+  const [inputVisible, setInputVisible] = useState(false);
 
   const ivKeys = ["hp", "atk", "def", "spa", "spd", "spe"];
 
@@ -22,6 +27,20 @@ const TreeCell = ({ poke, level, index, treeId }) => {
     };
     onLoad();
   }, [name]);
+
+  const handleChange = (input) => {
+    // setInput(input[0]);
+    dispatch(
+      editBreeder({
+        level,
+        index,
+        treeId,
+        name: input[0],
+        gender: selectedGender,
+      })
+    );
+    setInputVisible(!inputVisible);
+  };
 
   return (
     <div className={`card treeCell ${breeder && "treeCellBg"}`}>
@@ -36,8 +55,43 @@ const TreeCell = ({ poke, level, index, treeId }) => {
           </h5>
         )}
         <div className="d-flex">
-          <h5>{name ? name : "..."}</h5>
+          {inputVisible ? (
+            <div>
+              <div>
+                {["male", "female", "genderless"].map((g) => (
+                  <button
+                    key={g}
+                    className={`mx-1 btn btn-outline-secondary ${g}${
+                      gender === g ? " active" : ""
+                    }`}
+                    onClick={() =>
+                      dispatch(editBreeder({ index, level, treeId, gender: g }))
+                    }
+                  >
+                    {genderIcons[g].icon}
+                  </button>
+                ))}
+              </div>
+              <div className="mx-auto" spellCheck="false">
+                <Typeahead
+                  id="typeahead"
+                  placeholder="Name..."
+                  minLength={2}
+                  highlightOnlyResult
+                  onChange={(selected) => {
+                    handleChange(selected);
+                  }}
+                  options={allPokes}
+                ></Typeahead>
+              </div>
+            </div>
+          ) : (
+            <h5>{name ? name : "..."}</h5>
+          )}
         </div>
+        <button className="btn" onClick={() => setInputVisible(!inputVisible)}>
+          <BiEdit />
+        </button>
       </div>
 
       <div className="d-flex justify-content-center mb-3">
@@ -62,7 +116,7 @@ const TreeCell = ({ poke, level, index, treeId }) => {
           <div>
             <button
               className="btn"
-              onClick={() => dispatch(editBreeder({ level, index, treeId }))}
+              onClick={() => dispatch(toggleBreeder({ level, index, treeId }))}
             >
               Completed:{" "}
               {breeder ? <ImCheckboxChecked /> : <ImCheckboxUnchecked />}

@@ -2,11 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { getTrees } from "../../store/trees";
 import TreeCell from "./treeCell";
+import { getAllPokeNames } from "../../utils/pokeApi";
 
 const Tree = ({ treeid }) => {
   const trees = useSelector(getTrees);
   const [tree, setTree] = useState({});
   const [levels, setLevels] = useState([]);
+  const [allPokes, setAllPokes] = useState([]);
 
   const getTreeById = (trees, treeid) => {
     const [tree] = trees.filter((tree) => tree.id === parseInt(treeid));
@@ -23,6 +25,14 @@ const Tree = ({ treeid }) => {
     setTree(tree);
     setLevels(getLevels(tree));
   }, [treeid, trees, tree]);
+
+  useEffect(() => {
+    getPokes();
+  }, []);
+
+  const getPokes = async () => {
+    setAllPokes(await getAllPokeNames());
+  };
 
   const canvasRef = useRef(null);
   console.log("levels", levels);
@@ -46,6 +56,7 @@ const Tree = ({ treeid }) => {
                       level={level}
                       index={index}
                       treeId={tree.id}
+                      allPokes={allPokes}
                     ></TreeCell>
                   )}
                 </div>
