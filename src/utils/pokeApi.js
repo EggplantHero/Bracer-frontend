@@ -20,6 +20,20 @@ export async function getImg(input) {
   return spriteUrl;
 }
 
+export function getSprite(sprites, size) {
+  let spriteUrl;
+  if (size === "small") {
+    spriteUrl = sprites.versions["generation-vii"].icons.front_default;
+  } else {
+    spriteUrl =
+      sprites.versions["generation-v"]["black-white"].animated.front_default;
+  }
+  if (spriteUrl === null) {
+    return "blank";
+  }
+  return spriteUrl;
+}
+
 export const cancelTokenSource = axios.CancelToken.source();
 
 export async function getImgSm(input) {
@@ -64,63 +78,72 @@ export async function getNatures() {
 }
 
 const eggGroups = [
-  { old: "monster", new: "Monster" },
-  { old: "water1", new: "Water A" },
-  { old: "bug", new: "Bug" },
-  { old: "flying", new: "Flying" },
-  { old: "ground", new: "Field" },
-  { old: "fairy", new: "Fairy" },
-  { old: "plant", new: "Grass" },
-  { old: "humanshape", new: "Humanoid" },
-  { old: "water3", new: "Water C" },
-  { old: "mineral", new: "Mineral" },
-  { old: "indeterminate", new: "Chaos" },
-  { old: "water2", new: "Water B" },
-  { old: "ditto", new: "Ditto" },
-  { old: "dragon", new: "Dragon" },
-  { old: "no-eggs", new: "Cannot breed" },
+  { a: "monster", b: "Monster" },
+  { a: "water1", b: "Water A" },
+  { a: "bug", b: "Bug" },
+  { a: "flying", b: "Flying" },
+  { a: "ground", b: "Field" },
+  { a: "fairy", b: "Fairy" },
+  { a: "plant", b: "Grass" },
+  { a: "humanshape", b: "Humanoid" },
+  { a: "water3", b: "Water C" },
+  { a: "mineral", b: "Mineral" },
+  { a: "indeterminate", b: "Chaos" },
+  { a: "water2", b: "Water B" },
+  { a: "ditto", b: "Ditto" },
+  { a: "dragon", b: "Dragon" },
+  { a: "no-eggs", b: "Cannot breed" },
 ];
 
 const HyphenedPokes = [
-  { old: "deoxys-normal", new: "deoxys" },
-  { old: "wormadam-plant", new: "wormadam" },
-  { old: "giratina-altered", new: "giratina" },
-  { old: "shaymin-land", new: "shaymin" },
-  { old: "basculin-red-striped", new: "basculin" },
-  { old: "darmanitan-standard", new: "darmanitan" },
-  { old: "tornadus-incarnate", new: "tornadus" },
-  { old: "thundurus-incarnate", new: "thundurus" },
-  { old: "landorus-incarnate", new: "landorus" },
-  { old: "keldeo-ordinary", new: "keldeo" },
-  { old: "meloetta-aria", new: "meloetta" },
+  { a: "deoxys-normal", b: "deoxys" },
+  { a: "wormadam-plant", b: "wormadam" },
+  { a: "giratina-altered", b: "giratina" },
+  { a: "shaymin-land", b: "shaymin" },
+  { a: "basculin-red-striped", b: "basculin" },
+  { a: "darmanitan-standard", b: "darmanitan" },
+  { a: "tornadus-incarnate", b: "tornadus" },
+  { a: "thundurus-incarnate", b: "thundurus" },
+  { a: "landorus-incarnate", b: "landorus" },
+  { a: "keldeo-ordinary", b: "keldeo" },
+  { a: "meloetta-aria", b: "meloetta" },
 ];
 
-function convertObjectProp(input, array) {
-  array.forEach((group) => (input = input.replace(group.old, group.new)));
+export function formatEggs(input, reverse) {
+  eggGroups.forEach(
+    (egg) =>
+      (input = reverse
+        ? input.replace(egg.b, egg.a)
+        : input.replace(egg.a, egg.b))
+  );
+  return input;
+}
+
+export function formatName(input, reverse) {
+  HyphenedPokes.forEach(
+    (name) =>
+      (input = reverse
+        ? input.replace(name.b, name.a)
+        : input.replace(name.a, name.b))
+  );
   return input;
 }
 
 export async function getPokemonSpecies(name) {
   const { data } = await http.get(
-    `${apiUrl}/pokemon-species/${convertObjectProp(
-      name.toLowerCase(),
-      HyphenedPokes
-    )}`
+    `${apiUrl}/pokemon-species/${formatName(name.toLowerCase())}`
   );
   return data;
 }
 
 export async function findEggGroup(data) {
   if (!data) return;
-  const newEggGroups = data.egg_groups.map((group) =>
-    convertObjectProp(group.name, eggGroups)
-  );
+  const newEggGroups = data.egg_groups.map((group) => formatEggs(group.name));
   return newEggGroups;
 }
 
-export async function getGenders(data) {
-  if (!data) return;
-  switch (data.gender_rate) {
+export function parseGenderRate(rate) {
+  switch (rate) {
     case -1:
       return ["genderless"];
     case 0:

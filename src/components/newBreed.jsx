@@ -18,23 +18,24 @@ const NewBreedPage = () => {
 
   const onEnter = async (state) => {
     dispatch(setTarget(state));
-    //TODO: change hardcoded url to env
     const url = `${process.env.REACT_APP_API_URL}/api/boxbreed/`;
-    // const url = `https://bracer.app/api/boxbreed/`;
     const payload = JSON.stringify({ target: { data: state }, breeders });
+    console.log("PAYLOAD", payload);
     const config = {
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
     };
-    console.log("POST REQUESTING:", payload);
-    const { data } = await http.post(url, payload, config);
-    console.log("RESPONSE:", data);
-
-    const id = createId();
-    dispatch(addTree({ data: data, id: id }));
-    history.push(`/history/${id}`);
+    try {
+      console.log("POST REQUESTING:", payload);
+      const { data } = await http.post(url, payload, config);
+      const id = createId();
+      dispatch(addTree({ data: data, id: id }));
+      history.push(`/history/${id}`);
+    } catch (error) {
+      console.log("errorm", error);
+    }
   };
   return (
     <div className="container user-select-none text-center">

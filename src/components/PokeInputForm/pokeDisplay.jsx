@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import FormContext from "../../contexts/formContext";
 import { getImg } from "../../utils/pokeApi";
 
-const PokeLookup = () => {
+const PokeDisplay = () => {
   const [formState] = useContext(FormContext);
   const [url, setUrl] = useState("");
   const poke = formState;
@@ -35,4 +35,4 @@ const PokeLookup = () => {
   );
 };
 
-export default PokeLookup;
+export default PokeDisplay;

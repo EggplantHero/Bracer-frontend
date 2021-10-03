@@ -2,17 +2,19 @@ import React, { useEffect, useState } from "react";
 import FormContext from "../../contexts/formContext";
 import { initialState, schema, validate } from "../../services/pokeInputForm";
 import { HiOutlineBan } from "react-icons/hi";
-import SearchBar from "./searchBar";
-import PokeDisplay from "./pokeDisplay";
+// import SearchBar from "./searchBar";
+// import PokeDisplay from "./pokeDisplay";
 import IvSelection from "./ivSelect";
 import GenderSelect from "./genderSelect";
+import SearchBarContainer from "../searchBar/searchBarContainer";
 
 const PokeInputForm = ({ onEnter }) => {
   const state = useState(initialState);
-  const [formState] = state;
+  const [formState, setFormState] = state;
   const [valid, setValid] = useState(false);
 
   useEffect(() => {
+    console.log("FORM UPDATED", formState);
     const valid = validate(formState, schema);
     setValid(valid);
   }, [formState]);
@@ -23,13 +25,30 @@ const PokeInputForm = ({ onEnter }) => {
     } else {
       onEnter(formState);
     }
+    console.log("FORMSTATE TESTING", formState);
+    console.log("INITIAL TESTING", initialState);
+    setFormState({
+      ...formState,
+      ivs: initialState.ivs,
+      gender: formState.possibleGenders[0],
+    });
+  };
+
+  const onSearchbarChange = (data) => {
+    const { name, eggGroups, possibleGenders } = data;
+    setFormState({
+      ...formState,
+      name,
+      eggGroups,
+      possibleGenders,
+      gender: possibleGenders[0],
+    });
   };
 
   return (
     <FormContext.Provider value={state}>
       <div className="card p-5">
-        <SearchBar></SearchBar>
-        <PokeDisplay></PokeDisplay>
+        <SearchBarContainer size={6} onSearchbarChange={onSearchbarChange} />
         <GenderSelect></GenderSelect>
         <IvSelection></IvSelection>
         <p className="mt-2">

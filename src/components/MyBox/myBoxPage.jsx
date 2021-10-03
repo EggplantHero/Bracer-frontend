@@ -1,12 +1,6 @@
-import { Button } from "bootstrap";
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addBreeder,
-  getBreeders,
-  removeBreeder,
-  removeBreeders,
-} from "../../store/breeders";
+import { addBreeder, removeBreeders } from "../../store/breeders";
 import { getSelectedIds, getSelectedTool, setSelectedId } from "../../store/ui";
 import PokeInputForm from "../PokeInputForm/pokeInputForm";
 import BreederBoxes from "./breederBoxes";

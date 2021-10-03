@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,11 +11,16 @@ import MyBox from "./components/MyBox/myBoxPage";
 import History from "./components/History/history";
 import NotFound from "./components/notFound";
 import Footer from "./components/footer";
+import { initializeState } from "./store/pokeapi";
 
 const App = () => {
   const dispatch = useDispatch();
   const darkMode = useSelector(getMode);
   const expanded = useSelector(getSidebar);
+
+  useEffect(() => {
+    dispatch(initializeState());
+  }, [dispatch]);
 
   return (
     <HelmetProvider>

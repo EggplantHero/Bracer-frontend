@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import TreeCell from "./treeCell";
+import TreeCell from "../treeCell";
 import {
   drawLines,
   countChildren,
   offsetCoords,
-} from "../../utils/lineRenderer";
-import { getAllBraceIcons } from "../../utils/pokeApi";
+} from "../../../utils/lineRenderer";
+import { getAllBraceIcons } from "../../../utils/pokeApi";
 import axios from "axios";
 
 class Tree extends Component {

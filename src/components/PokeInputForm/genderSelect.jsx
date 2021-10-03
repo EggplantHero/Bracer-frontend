@@ -8,17 +8,18 @@ const GenderSelect = () => {
 
   return (
     <div>
-      {possibleGenders.map((gender) => (
-        <button
-          key={gender}
-          className={`mx-1 btn btn-outline-secondary ${gender}${
-            formState.gender === gender ? " active" : ""
-          }`}
-          onClick={() => setFormState({ ...formState, gender })}
-        >
-          {genderIcons[gender].icon}
-        </button>
-      ))}
+      {possibleGenders &&
+        possibleGenders.map((gender) => (
+          <button
+            key={gender}
+            className={`mx-1 btn btn-outline-secondary ${gender}${
+              formState.gender === gender ? " active" : ""
+            }`}
+            onClick={() => setFormState({ ...formState, gender })}
+          >
+            {genderIcons[gender].icon}
+          </button>
+        ))}
     </div>
   );
 };

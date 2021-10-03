@@ -138,6 +138,12 @@ nav {
   width: 100%;
 }
 
+.btn-max {
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+}
+
 .green {
   color: limegreen;
 }

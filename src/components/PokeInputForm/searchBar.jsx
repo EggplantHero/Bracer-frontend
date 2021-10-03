@@ -6,7 +6,7 @@ import {
   getAllPokeNames,
   getPokemonSpecies,
   findEggGroup,
-  getGenders,
+  // getGenders,
 } from "../../utils/pokeApi";
 
 const SearchBar = () => {
@@ -27,12 +27,12 @@ const SearchBar = () => {
     setSelected(input);
     const data = await getPokemonSpecies(input[0]);
     const eggGroups = await findEggGroup(data);
-    const possibleGenders = await getGenders(data);
+    // const possibleGenders = await getGenders(data);
     setFormState({
       ...formState,
       eggGroups,
-      possibleGenders,
-      gender: possibleGenders[0],
+      // possibleGenders,
+      // gender: possibleGenders[0],
       name: input[0],
     });
   };

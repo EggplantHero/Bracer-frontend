@@ -2,13 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { getTrees } from "../../store/trees";
 import TreeCell from "./treeCell";
-import { getAllPokeNames } from "../../utils/pokeApi";
 
 const Tree = ({ treeid }) => {
   const trees = useSelector(getTrees);
   const [tree, setTree] = useState({});
   const [levels, setLevels] = useState([]);
-  const [allPokes, setAllPokes] = useState([]);
 
   const getTreeById = (trees, treeid) => {
     const [tree] = trees.filter((tree) => tree.id === parseInt(treeid));
@@ -26,26 +24,7 @@ const Tree = ({ treeid }) => {
     setLevels(getLevels(tree));
   }, [treeid, trees, tree]);
 
-  useEffect(() => {
-    getPokes();
-  }, []);
-
-  const getPokes = async () => {
-    setAllPokes(await getAllPokeNames());
-  };
-
   const canvasRef = useRef(null);
-  console.log("levels", levels);
-
-  const emptyPoke = {
-    data: {
-      name: "...",
-      ivs: { hp: 1, atk: 1, def: 1, spa: 1, spd: 1, spe: 1 },
-      gender: "a",
-      item: "a",
-      breeder: true,
-    },
-  };
 
   return (
     <div className="user-select-none">
@@ -66,7 +45,6 @@ const Tree = ({ treeid }) => {
                       level={level}
                       index={index}
                       treeId={tree.id}
-                      allPokes={allPokes}
                     ></TreeCell>
                   ) : (
                     <div className="card treeCell treeCellBg"></div>

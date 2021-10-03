@@ -3,6 +3,7 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import reducer from "./reducer";
 import logger from "./middleware/logger";
+import api from "./middleware/api";
 import toastify from "./middleware/toastify";
 
 const persistConfig = {
@@ -17,6 +18,7 @@ export const store = configureStore({
   middleware: [
     ...getDefaultMiddleware({ serializableCheck: false }),
     logger("console"),
+    api,
     toastify,
   ],
 });

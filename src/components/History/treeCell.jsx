@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { getImgSm, getAllBraceIcons } from "../../utils/pokeApi";
 // import capitalize from "../../utils/capitalize";
 import { genderIcons, statColors } from "../../utils/remap";
@@ -8,14 +9,17 @@ import { editBreeder, toggleBreeder } from "../../store/trees";
 import { useDispatch } from "react-redux";
 import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
+import SearchBar from "../PokeInputForm/searchBar";
+import GenderSelect from "../PokeInputForm/genderSelect";
+import { getCache } from "../../store/pokeapi";
 
-const TreeCell = ({ poke, level, index, treeId, allPokes }) => {
+const TreeCell = ({ poke, level, index, treeId }) => {
+  const cache = useSelector(getCache);
+
   const { name, ivs, gender, item, breeder } = poke.data;
   const dispatch = useDispatch();
   const [sprite, setSprite] = useState("");
   const [braces, setBraces] = useState([]);
-  const [selectedGender, setSelectedGender] = useState(gender);
-  // const [input, setInput] = useState("");
   const [inputVisible, setInputVisible] = useState(false);
 
   const ivKeys = ["hp", "atk", "def", "spa", "spd", "spe"];
@@ -28,18 +32,33 @@ const TreeCell = ({ poke, level, index, treeId, allPokes }) => {
     onLoad();
   }, [name]);
 
+  const toggleInput = () => {
+    setInputVisible(!inputVisible);
+  };
+
   const handleChange = (input) => {
-    // setInput(input[0]);
     dispatch(
       editBreeder({
         level,
         index,
         treeId,
         name: input[0],
-        gender: selectedGender,
       })
     );
-    setInputVisible(!inputVisible);
+    toggleInput();
+  };
+
+  const handleGenderSelect = (input) => {
+    dispatch(
+      editBreeder({
+        level,
+        index,
+        treeId,
+        name,
+        gender: input,
+      })
+    );
+    toggleInput();
   };
 
   return (
@@ -57,53 +76,31 @@ const TreeCell = ({ poke, level, index, treeId, allPokes }) => {
         <div className="d-flex">
           {inputVisible ? (
             <div>
-              <div>
-                {["male", "female", "genderless"].map((g) => (
-                  <button
-                    key={g}
-                    className={`mx-1 btn btn-outline-secondary ${g}${
-                      gender === g ? " active" : ""
-                    }`}
-                    onClick={() => {
-                      dispatch(
-                        editBreeder({ index, level, treeId, gender: g })
-                      );
-                      setInputVisible(!inputVisible);
-                    }}
-                  >
-                    {genderIcons[g].icon}
-                  </button>
-                ))}
-              </div>
-              <div className="mx-auto" spellCheck="false">
-                <Typeahead
-                  id="typeahead"
-                  placeholder="Name..."
-                  minLength={2}
-                  highlightOnlyResult
-                  onChange={(selected) => {
-                    handleChange(selected);
-                  }}
-                  options={allPokes}
-                ></Typeahead>
-              </div>
+              <SearchBar handleChange={handleChange} />
+              <GenderSelect
+                handleGenderSelect={handleGenderSelect}
+                selectedGender={gender}
+                possibleGenders={["male", "female", "genderless"]}
+              />
             </div>
           ) : (
             <h5>{name ? name : "..."}</h5>
           )}
         </div>
-        <button className="btn" onClick={() => setInputVisible(!inputVisible)}>
+        <button className="btn" onClick={() => toggleInput()}>
           <BiEdit />
         </button>
       </div>
-      <div className="d-flex justify-content-center mb-3">
-        <div>
-          <img src={sprite} alt="" />
+      {!inputVisible && (
+        <div className="d-flex justify-content-center mb-3">
+          <div>
+            <img src={sprite} alt="" />
+          </div>
+          <div>
+            <img src={braces[item]} alt="" />
+          </div>
         </div>
-        <div>
-          <img src={braces[item]} alt="" />
-        </div>
-      </div>
+      )}
       <div className="container-fluid">
         <div className="row">
           {ivKeys.map((iv) => (

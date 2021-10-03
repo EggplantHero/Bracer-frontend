@@ -3,12 +3,12 @@ import Joi from "joi-browser";
 export const initialState = {
   name: "",
   ivs: {
-    hp: 31,
-    atk: 31,
-    def: 31,
-    spa: 31,
-    spd: 31,
-    spe: 31,
+    hp: -1,
+    atk: -1,
+    def: -1,
+    spa: -1,
+    spd: -1,
+    spe: -1,
   },
   nature: { value: "adamant", active: true },
   eggGroups: [],

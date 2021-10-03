@@ -6,6 +6,36 @@ export const genderIcons = {
   genderless: { icon: <FaGenderless />, color: "grey" },
 };
 
+export function getIvColor(value, text) {
+  if (!text) {
+    switch (value) {
+      case 31:
+        return "green";
+      case 30:
+        return "lime";
+      case 0:
+        return "orange";
+      case -1:
+        return "red";
+      default:
+        return "yellow";
+    }
+  } else {
+    switch (value) {
+      case 31:
+        return "green";
+      case 30:
+        return "darkolivegreen";
+      case 0:
+        return "red";
+      case -1:
+        return "tomato";
+      default:
+        return "black";
+    }
+  }
+}
+
 export function mapBreederSchema(object) {
   const { name, hp, atk, def, spa, spd, spe, nature, eggGroups, gender } =
     object;

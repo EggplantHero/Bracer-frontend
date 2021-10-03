@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { getImg } from "../../utils/pokeApi";
-import { useDispatch, useSelector } from "react-redux";
-import { addBreeder, getBreeders } from "../../store/breeders";
+import { useSelector } from "react-redux";
+import { getBreeders } from "../../store/breeders";
 import { ivClass, genderIcons } from "../../utils/remap";
-import { getSelectedIds, getSelectedTool, setSelectedId } from "../../store/ui";
+import { getSelectedIds } from "../../store/ui";
 
 const BreederInspect = () => {
   const [url, setUrl] = useState("");

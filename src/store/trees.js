@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { createSelector } from "reselect";
 
 const slice = createSlice({
-  name: "Trees",
+  name: "trees",
   initialState: [],
   reducers: {
     reorderTrees: (trees, action) => {
