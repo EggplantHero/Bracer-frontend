@@ -7,6 +7,8 @@ import { HiOutlineBan } from "react-icons/hi";
 import IvSelection from "./ivSelect";
 import GenderSelect from "./genderSelect";
 import SearchBarContainer from "../searchBar/searchBarContainer";
+import PokeDisplay from "../searchBar/pokeDisplay";
+import { tsImportEqualsDeclaration } from "@babel/types";
 
 const PokeInputForm = ({ onEnter }) => {
   const state = useState(initialState);
@@ -49,6 +51,7 @@ const PokeInputForm = ({ onEnter }) => {
     <FormContext.Provider value={state}>
       <div className="card p-5">
         <SearchBarContainer size={6} onSearchbarChange={onSearchbarChange} />
+        <PokeDisplay name={formState.name} />
         <GenderSelect></GenderSelect>
         <IvSelection></IvSelection>
         <p className="mt-2">

@@ -14,6 +14,8 @@ const slice = createSlice({
   name: "pokeapi",
   initialState: {
     allPokes: {},
+    itemUrls: [],
+    itemIcons: {},
     loading: false,
   },
   reducers: {
@@ -45,11 +47,20 @@ const slice = createSlice({
         })
       );
     },
+    addBraces: (pokes, action) => {
+      const { itemUrls, itemIcons } = pokes;
+      itemUrls.push(action.payload.sprites.default);
+      if (itemUrls.length === 7) {
+        const stats = ["hp", "atk", "def", "spa", "spd", "spe", "nature"];
+        stats.map((stat, index) => (itemIcons[stat] = itemUrls[index]));
+        delete pokes.itemUrls;
+      }
+    },
   },
 });
 
 export default slice.reducer;
-export const { addPoke, addPokeSprite, addOptions } = slice.actions;
+export const { addPoke, addPokeSprite, addOptions, addBraces } = slice.actions;
 
 //actions
 
@@ -59,6 +70,23 @@ export const initializeState = () => (dispatch, getState) => {
       apiCallBegan({
         url: `/pokemon/?limit=649`,
         onSuccess: addOptions.type,
+      })
+    );
+  }
+  if (Object.keys(getState().pokeapi.itemIcons).length === 0) {
+    const braces = ["weight", "bracer", "belt", "lens", "band", "anklet"];
+    braces.map((brace) =>
+      dispatch(
+        apiCallBegan({
+          url: `/item/power-${brace}`,
+          onSuccess: addBraces.type,
+        })
+      )
+    );
+    dispatch(
+      apiCallBegan({
+        url: `/item/everstone`,
+        onSuccess: addBraces.type,
       })
     );
   }
@@ -88,4 +116,8 @@ export const fetchData = (pokeName) => (dispatch, getState) => {
 export const getCache = createSelector(
   (state) => state.pokeapi,
   (pokeapi) => pokeapi.allPokes
+);
+export const getItemIcons = createSelector(
+  (state) => state.pokeapi,
+  (pokeapi) => pokeapi.itemIcons
 );

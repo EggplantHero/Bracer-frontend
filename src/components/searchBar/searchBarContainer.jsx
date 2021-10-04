@@ -6,8 +6,9 @@ import SearchBar from "./searchBar";
 import GenderSelect from "./genderSelect";
 import capitalize from "../../utils/capitalize";
 import PokeDisplay from "./pokeDisplay";
+import PokeDisplaySm from "./pokeDisplaySm";
 
-const SearchBarContainer = ({ size, onSearchbarChange, onGenderSelect }) => {
+const SearchBarContainer = ({ small, colSize, onSearchbarChange }) => {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [state, setState] = useState({ sprite: "", possibleGenders: [] });
@@ -35,13 +36,13 @@ const SearchBarContainer = ({ size, onSearchbarChange, onGenderSelect }) => {
   }, [cache]);
 
   useEffect(() => {
+    if (!state.sprite) return;
     onSearchbarChange(state);
   }, [state]);
 
   return (
     <div>
-      <SearchBar handleChange={handleChange} size={size} />
-      <PokeDisplay state={state} />
+      <SearchBar handleChange={handleChange} colSize={colSize} />
     </div>
   );
 };

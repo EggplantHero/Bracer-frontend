@@ -3,52 +3,52 @@ import { useSelector } from "react-redux";
 import { getImgSm, getAllBraceIcons } from "../../utils/pokeApi";
 // import capitalize from "../../utils/capitalize";
 import { genderIcons, statColors } from "../../utils/remap";
+import capitalize from "../../utils/capitalize";
 import { BiEdit } from "react-icons/bi";
 import { ImCheckboxUnchecked, ImCheckboxChecked } from "react-icons/im";
 import { editBreeder, toggleBreeder } from "../../store/trees";
 import { useDispatch } from "react-redux";
 import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
-import SearchBar from "../PokeInputForm/searchBar";
-import GenderSelect from "../PokeInputForm/genderSelect";
-import { getCache } from "../../store/pokeapi";
+import SearchBarContainer from "../searchBar/searchBarContainer";
+import GenderSelect from "../searchBar/genderSelect";
+import { getCache, getItemIcons } from "../../store/pokeapi";
+import PokeDisplay from "../searchBar/pokeDisplay";
 
 const TreeCell = ({ poke, level, index, treeId }) => {
-  const cache = useSelector(getCache);
-
-  const { name, ivs, gender, item, breeder } = poke.data;
   const dispatch = useDispatch();
-  const [sprite, setSprite] = useState("");
-  const [braces, setBraces] = useState([]);
+  const { name, ivs, gender, item, breeder } = poke.data;
+  const braces = useSelector(getItemIcons);
+  const cache = useSelector(getCache);
   const [inputVisible, setInputVisible] = useState(false);
-
   const ivKeys = ["hp", "atk", "def", "spa", "spd", "spe"];
 
   useEffect(() => {
-    const onLoad = async () => {
-      setSprite(await getImgSm(name));
-      setBraces(await getAllBraceIcons());
-    };
-    onLoad();
+    console.log(name, index, level);
   }, [name]);
 
   const toggleInput = () => {
+    console.log("toggle input");
     setInputVisible(!inputVisible);
+    console.log(inputVisible);
   };
 
-  const handleChange = (input) => {
+  const onSearchbarChange = (input) => {
     dispatch(
       editBreeder({
         level,
         index,
         treeId,
-        name: input[0],
+        name: input.name,
       })
     );
     toggleInput();
+    console.log("onsearchbarchagne");
+    console.log("input", input);
   };
 
   const handleGenderSelect = (input) => {
+    console.log("handlegenderselect");
     dispatch(
       editBreeder({
         level,
@@ -64,38 +64,28 @@ const TreeCell = ({ poke, level, index, treeId }) => {
   return (
     <div className={`card treeCell ${breeder && "treeCellBg"}`}>
       <div className="d-flex justify-content-center">
-        {gender && (
-          <h5
-            style={{
-              color: genderIcons[gender].color,
-            }}
-          >
-            {genderIcons[gender].icon}
-          </h5>
+        {inputVisible ? (
+          <div>
+            <SearchBarContainer
+              small={true}
+              size={6}
+              onSearchbarChange={onSearchbarChange}
+              onGenderSelect={handleGenderSelect}
+            />
+          </div>
+        ) : (
+          <div className="d-flex">
+            {gender && <h5 className={gender}>{genderIcons[gender].icon}</h5>}
+            <h5>{name ? capitalize(name) : "..."}</h5>
+          </div>
         )}
-        <div className="d-flex">
-          {inputVisible ? (
-            <div>
-              <SearchBar handleChange={handleChange} />
-              <GenderSelect
-                handleGenderSelect={handleGenderSelect}
-                selectedGender={gender}
-                possibleGenders={["male", "female", "genderless"]}
-              />
-            </div>
-          ) : (
-            <h5>{name ? name : "..."}</h5>
-          )}
-        </div>
         <button className="btn" onClick={() => toggleInput()}>
           <BiEdit />
         </button>
       </div>
       {!inputVisible && (
         <div className="d-flex justify-content-center mb-3">
-          <div>
-            <img src={sprite} alt="" />
-          </div>
+          <PokeDisplay name={name} small={true} />
           <div>
             <img src={braces[item]} alt="" />
           </div>
