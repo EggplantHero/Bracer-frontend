@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { getImgSm, getAllBraceIcons } from "../../utils/pokeApi";
 // import capitalize from "../../utils/capitalize";
 import { genderIcons, statColors } from "../../utils/remap";
 import capitalize from "../../utils/capitalize";
@@ -8,7 +7,6 @@ import { BiEdit } from "react-icons/bi";
 import { ImCheckboxUnchecked, ImCheckboxChecked } from "react-icons/im";
 import { editBreeder, toggleBreeder } from "../../store/trees";
 import { useDispatch } from "react-redux";
-import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import SearchBarContainer from "../searchBar/searchBarContainer";
 import GenderSelect from "../searchBar/genderSelect";
@@ -34,17 +32,17 @@ const TreeCell = ({ poke, level, index, treeId }) => {
   };
 
   const onSearchbarChange = (input) => {
+    const { possibleGenders } = cache[input.name];
     dispatch(
       editBreeder({
         level,
         index,
         treeId,
         name: input.name,
+        gender: !possibleGenders.includes(gender) && possibleGenders[0],
       })
     );
     toggleInput();
-    console.log("onsearchbarchagne");
-    console.log("input", input);
   };
 
   const handleGenderSelect = (input) => {
@@ -70,7 +68,11 @@ const TreeCell = ({ poke, level, index, treeId }) => {
               small={true}
               size={6}
               onSearchbarChange={onSearchbarChange}
-              onGenderSelect={handleGenderSelect}
+            />
+            <GenderSelect
+              handleGenderSelect={handleGenderSelect}
+              selectedGender={gender}
+              possibleGenders={cache[name].possibleGenders}
             />
           </div>
         ) : (

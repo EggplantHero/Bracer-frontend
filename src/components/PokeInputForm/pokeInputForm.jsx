@@ -1,25 +1,33 @@
 import React, { useEffect, useState } from "react";
-import FormContext from "../../contexts/formContext";
 import { initialState, schema, validate } from "../../services/pokeInputForm";
 import { HiOutlineBan } from "react-icons/hi";
-// import SearchBar from "./searchBar";
-// import PokeDisplay from "./pokeDisplay";
 import IvSelection from "./ivSelect";
-import GenderSelect from "./genderSelect";
 import SearchBarContainer from "../searchBar/searchBarContainer";
 import PokeDisplay from "../searchBar/pokeDisplay";
-import { tsImportEqualsDeclaration } from "@babel/types";
+import GenderSelect from "../searchBar/genderSelect";
+import { useSelector } from "react-redux";
+import { getCache } from "../../store/pokeapi";
+import FormContext from "../../contexts/formContext";
 
 const PokeInputForm = ({ onEnter }) => {
+  const cache = useSelector(getCache);
   const state = useState(initialState);
   const [formState, setFormState] = state;
+  const { name, gender } = formState;
   const [valid, setValid] = useState(false);
 
   useEffect(() => {
-    console.log("FORM UPDATED", formState);
     const valid = validate(formState, schema);
     setValid(valid);
   }, [formState]);
+
+  const resetForm = () => {
+    setFormState({
+      ...formState,
+      ivs: initialState.ivs,
+      gender: cache[name].possibleGenders[0],
+    });
+  };
 
   const handleSubmit = () => {
     if (onEnter === undefined) {
@@ -27,13 +35,7 @@ const PokeInputForm = ({ onEnter }) => {
     } else {
       onEnter(formState);
     }
-    console.log("FORMSTATE TESTING", formState);
-    console.log("INITIAL TESTING", initialState);
-    setFormState({
-      ...formState,
-      ivs: initialState.ivs,
-      gender: formState.possibleGenders[0],
-    });
+    resetForm();
   };
 
   const onSearchbarChange = (data) => {
@@ -42,8 +44,14 @@ const PokeInputForm = ({ onEnter }) => {
       ...formState,
       name,
       eggGroups,
-      possibleGenders,
       gender: possibleGenders[0],
+    });
+  };
+
+  const handleGenderSelect = (data) => {
+    setFormState({
+      ...formState,
+      gender: data,
     });
   };
 
@@ -51,8 +59,14 @@ const PokeInputForm = ({ onEnter }) => {
     <FormContext.Provider value={state}>
       <div className="card p-5">
         <SearchBarContainer size={6} onSearchbarChange={onSearchbarChange} />
-        <PokeDisplay name={formState.name} />
-        <GenderSelect></GenderSelect>
+        <PokeDisplay name={name} />
+        {name && (
+          <GenderSelect
+            handleGenderSelect={handleGenderSelect}
+            selectedGender={gender}
+            possibleGenders={cache[name].possibleGenders}
+          ></GenderSelect>
+        )}
         <IvSelection></IvSelection>
         <p className="mt-2">
           Stats that you do not wish to specify can be set to "<HiOutlineBan />
@@ -67,7 +81,6 @@ const PokeInputForm = ({ onEnter }) => {
             Submit
           </button>
         </div>
-        {/* FOOTNOTE */}
       </div>
     </FormContext.Provider>
   );

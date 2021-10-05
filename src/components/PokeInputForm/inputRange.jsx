@@ -3,7 +3,7 @@ import FormContext from "../../contexts/formContext";
 import "../../inputRange.css";
 import { getIvColor } from "../../utils/remap";
 
-const InputRange = ({ stat }) => {
+const InputRange = ({ stat, ivs }) => {
   const [formState, setFormState] = useContext(FormContext);
 
   const value = formState.ivs[stat];

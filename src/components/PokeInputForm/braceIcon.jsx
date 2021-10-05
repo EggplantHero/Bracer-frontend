@@ -1,17 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { getAllBraceIcons } from "../../utils/pokeApi";
+import React from "react";
+import { useSelector } from "react-redux";
+import { getItemIcons } from "../../store/pokeapi";
 
 const BraceIcon = ({ stat }) => {
-  const [braces, setBraces] = useState([]);
-
-  //get brace icons
-  useEffect(() => {
-    const getBraces = async () => {
-      const bracesIcons = await getAllBraceIcons();
-      setBraces(bracesIcons);
-    };
-    getBraces();
-  }, [braces.length]);
+  const braces = useSelector(getItemIcons);
 
   return (
     <span className="input-group-text input-group-text-custom d-flex justify-content-center">

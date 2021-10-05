@@ -3,10 +3,6 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { fetchData, getCache } from "../../store/pokeapi";
 import SearchBar from "./searchBar";
-import GenderSelect from "./genderSelect";
-import capitalize from "../../utils/capitalize";
-import PokeDisplay from "./pokeDisplay";
-import PokeDisplaySm from "./pokeDisplaySm";
 
 const SearchBarContainer = ({ small, colSize, onSearchbarChange }) => {
   const dispatch = useDispatch();

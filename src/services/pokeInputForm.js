@@ -13,7 +13,6 @@ export const initialState = {
   nature: { value: "adamant", active: true },
   eggGroups: [],
   gender: "",
-  possibleGenders: [],
   breeder: true,
 };
 

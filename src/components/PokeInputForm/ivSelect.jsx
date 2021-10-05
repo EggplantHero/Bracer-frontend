@@ -7,7 +7,6 @@ import IvValue from "./ivValue";
 const IvSelect = () => {
   const [formState] = useContext(FormContext);
   const ivs = Object.keys(formState.ivs);
-
   return (
     <div className="mx-auto col-12">
       {ivs.map((stat) => (

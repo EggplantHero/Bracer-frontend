@@ -15,7 +15,7 @@ const PokeDisplay = ({ name, small }) => {
   return (
     <div>
       {!small ? (
-        <div>
+        <div className="my-3">
           <div className="col-12 col-md-4 offset-md-4 d-inline-block">
             <div className="mx-auto imageParent bordered">
               {sprite && <img className="pe-none" src={sprite} alt="" />}
