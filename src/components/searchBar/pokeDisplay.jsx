@@ -1,41 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
 import { getCache } from "../../store/pokeapi";
 
-const PokeDisplay = ({ name, small }) => {
+const PokeDisplay = ({ name }) => {
   const cache = useSelector(getCache);
-  const [state, setState] = useState({});
-  const { sprite, spriteSm, eggGroups } = state;
-
-  useEffect(() => {
-    if (!name) return;
-    setState(cache[name]);
-  }, [name]);
 
   return (
-    <div>
-      {!small ? (
-        <div className="my-3">
-          <div className="col-12 col-md-4 offset-md-4 d-inline-block">
-            <div className="mx-auto imageParent bordered">
-              {sprite && <img className="pe-none" src={sprite} alt="" />}
-            </div>
-          </div>
-          <div className="col-md-4 d-inline-block mt-2">
-            <div className="mx-3">
-              {eggGroups &&
-                eggGroups.map((group, index) => (
-                  <p key={index} className="badge d-block">
-                    {group}
-                  </p>
-                ))}
-            </div>
+    <Fragment>
+      <div className="my-3">
+        <div className="col-12 col-md-4 offset-md-4 d-inline-block">
+          <div className="mx-auto imageParent bordered">
+            {name && (
+              <img className="pe-none" src={cache[name].sprite} alt="" />
+            )}
           </div>
         </div>
-      ) : (
-        <img className="pe-none" src={spriteSm} alt="" />
-      )}
-    </div>
+        <div className="col-md-4 d-inline-block mt-2">
+          <div className="mx-3">
+            {name &&
+              cache[name].eggGroups.map((group, index) => (
+                <p key={index} className="badge d-block">
+                  {group}
+                </p>
+              ))}
+          </div>
+        </div>
+      </div>
+    </Fragment>
   );
 };
 

@@ -1,37 +1,30 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-// import capitalize from "../../utils/capitalize";
-import { genderIcons, statColors } from "../../utils/remap";
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { genderIcons } from "../../utils/remap";
 import capitalize from "../../utils/capitalize";
 import { BiEdit } from "react-icons/bi";
-import { ImCheckboxUnchecked, ImCheckboxChecked } from "react-icons/im";
 import { editBreeder, toggleBreeder } from "../../store/trees";
-import { useDispatch } from "react-redux";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import SearchBarContainer from "../searchBar/searchBarContainer";
 import GenderSelect from "../searchBar/genderSelect";
 import { getCache, getItemIcons } from "../../store/pokeapi";
-import PokeDisplay from "../searchBar/pokeDisplay";
+import PokeDisplaySm from "../searchBar/pokeDisplaySm";
+import IvGrid from "./ivGrid";
+import Checkbox from "./checkbox";
 
 const TreeCell = ({ poke, level, index, treeId }) => {
   const dispatch = useDispatch();
   const { name, ivs, gender, item, breeder } = poke.data;
   const braces = useSelector(getItemIcons);
   const cache = useSelector(getCache);
-  const [inputVisible, setInputVisible] = useState(false);
-  const ivKeys = ["hp", "atk", "def", "spa", "spd", "spe"];
-
-  useEffect(() => {
-    console.log(name, index, level);
-  }, [name]);
+  const [editable, setEditable] = useState(false);
+  const allGenders = ["male", "female", "genderless"];
 
   const toggleInput = () => {
-    console.log("toggle input");
-    setInputVisible(!inputVisible);
-    console.log(inputVisible);
+    setEditable(!editable);
   };
 
-  const onSearchbarChange = (input) => {
+  const onSearch = (input) => {
     const { possibleGenders } = cache[input.name];
     dispatch(
       editBreeder({
@@ -45,8 +38,7 @@ const TreeCell = ({ poke, level, index, treeId }) => {
     toggleInput();
   };
 
-  const handleGenderSelect = (input) => {
-    console.log("handlegenderselect");
+  const onGenderSelect = (input) => {
     dispatch(
       editBreeder({
         level,
@@ -59,62 +51,54 @@ const TreeCell = ({ poke, level, index, treeId }) => {
     toggleInput();
   };
 
+  const onCheckboxClick = () => {
+    dispatch(toggleBreeder({ level, index, treeId }));
+  };
+
   return (
-    <div className={`card treeCell ${breeder && "treeCellBg"}`}>
-      <div className="d-flex justify-content-center">
-        {inputVisible ? (
+    <div>
+      <button
+        className="btn position-absolute"
+        style={{ top: "0", right: "0" }}
+        onClick={toggleInput}
+      >
+        <BiEdit />
+      </button>
+      <div
+        className="d-flex justify-content-center mt-1"
+        style={{ height: "110px" }}
+      >
+        {editable ? (
           <div>
-            <SearchBarContainer
-              small={true}
-              size={6}
-              onSearchbarChange={onSearchbarChange}
-            />
-            <GenderSelect
-              handleGenderSelect={handleGenderSelect}
-              selectedGender={gender}
-              possibleGenders={cache[name].possibleGenders}
-            />
+            <SearchBarContainer small={true} size={8} onSearch={onSearch} />
+            <div className="mt-1">
+              <GenderSelect
+                onGenderSelect={onGenderSelect}
+                selectedGender={gender}
+                possibleGenders={
+                  name ? cache[name].possibleGenders : allGenders
+                }
+              />
+            </div>
           </div>
         ) : (
-          <div className="d-flex">
-            {gender && <h5 className={gender}>{genderIcons[gender].icon}</h5>}
-            <h5>{name ? capitalize(name) : "..."}</h5>
+          <div>
+            <div className="d-flex justify-content-center">
+              {gender && <h5 className={gender}>{genderIcons[gender].icon}</h5>}
+              <h5>{name ? capitalize(name) : "..."}</h5>
+              <div style={{ width: "20px" }}></div>
+            </div>
+            <div>
+              <div className="d-inline-block">
+                <img src={braces[item]} alt="" />
+              </div>
+              <PokeDisplaySm name={name} />
+            </div>
           </div>
         )}
-        <button className="btn" onClick={() => toggleInput()}>
-          <BiEdit />
-        </button>
       </div>
-      {!inputVisible && (
-        <div className="d-flex justify-content-center mb-3">
-          <PokeDisplay name={name} small={true} />
-          <div>
-            <img src={braces[item]} alt="" />
-          </div>
-        </div>
-      )}
-      <div className="container-fluid">
-        <div className="row">
-          {ivKeys.map((iv) => (
-            <div key={iv} className="col-4 card ivCell">
-              {ivs[iv] !== -1 && (
-                <h6 style={{ color: statColors[iv] }}>
-                  {ivs[iv]} {iv.toUpperCase()}
-                </h6>
-              )}
-            </div>
-          ))}
-          <div>
-            <button
-              className="btn"
-              onClick={() => dispatch(toggleBreeder({ level, index, treeId }))}
-            >
-              Completed:{" "}
-              {breeder ? <ImCheckboxChecked /> : <ImCheckboxUnchecked />}
-            </button>
-          </div>
-        </div>
-      </div>
+      <IvGrid ivs={ivs} />
+      <Checkbox onClick={onCheckboxClick} bool={breeder} />
     </div>
   );
 };

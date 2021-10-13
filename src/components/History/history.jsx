@@ -16,7 +16,7 @@ const History = () => {
   };
 
   return (
-    <div className="container">
+    <div>
       <h6 className="text-center user-select-none mt-5">
         The optimal pattern was calculated for you based off given breeders:
       </h6>

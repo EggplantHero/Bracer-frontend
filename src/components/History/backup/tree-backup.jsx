@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 import TreeCell from "../treeCell";
-import {
-  drawLines,
-  countChildren,
-  offsetCoords,
-} from "../../../utils/lineRenderer";
+import { drawLines, countChildren, offsetCoords } from "../../../utils/tree";
 import { getAllBraceIcons } from "../../../utils/pokeApi";
 import axios from "axios";
 

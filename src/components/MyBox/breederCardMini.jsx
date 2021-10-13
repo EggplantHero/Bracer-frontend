@@ -9,6 +9,7 @@ import {
   setSelectedId,
   getSelectedTool,
 } from "../../store/ui";
+import capitalize from "../../utils/capitalize";
 
 const BreederCardMini = ({ breeder }) => {
   const dispatch = useDispatch();
@@ -28,18 +29,18 @@ const BreederCardMini = ({ breeder }) => {
 
   const handleSelection = () => {
     if (selectedTool === "inspect") {
-      dispatch(setSelectedId(breeder.id));
+      dispatch(setSelectedId(id));
     } else {
-      if (selectedIds.includes(breeder.id)) {
-        dispatch(removeSelectedId(breeder.id));
+      if (selectedIds.includes(id)) {
+        dispatch(removeSelectedId(id));
       } else {
-        dispatch(addSelectedId(breeder.id));
+        dispatch(addSelectedId(id));
       }
     }
   };
 
   const isSelected = () => {
-    const selected = selectedIds.includes(breeder.id);
+    const selected = selectedIds.includes(id);
     if (selected) {
       return `outline-${selectedTool === "inspect" ? "blue" : "red"}`;
     } else return "";
@@ -50,7 +51,7 @@ const BreederCardMini = ({ breeder }) => {
       <button className={`btn ${isSelected()}`} onClick={handleSelection}>
         <h6 className="my-0 d-flex justify-content-center">
           <span className={gender}>{genderIcons[gender].icon}</span>
-          <span>{breeder.data.name}</span>
+          <span>{capitalize(name)}</span>
         </h6>
         <div>
           <img src={url} alt="" className="pe-none"></img>

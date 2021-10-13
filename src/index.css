@@ -54,7 +54,8 @@ label {
 
 .treeCell {
   margin: 5px;
-  max-width: 250px;
+  max-width: 264px;
+  min-width: 160px;
   height: 230px;
 }
 .ivCell {

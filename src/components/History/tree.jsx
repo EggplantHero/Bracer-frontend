@@ -1,36 +1,55 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { getTrees } from "../../store/trees";
+import { resetCoordinates, getCoordinates } from "../../store/ui";
+import TreeCellWrapper from "./treeCellWrapper";
+import {
+  getLevels,
+  getTreeById,
+  container,
+  drawLines,
+  offsetCoords,
+} from "../../utils/tree";
+import { useDispatch } from "react-redux";
 import TreeCell from "./treeCell";
 
 const Tree = ({ treeid }) => {
+  const dispatch = useDispatch();
   const trees = useSelector(getTrees);
+  const coords = useSelector(getCoordinates);
   const [tree, setTree] = useState({});
   const [levels, setLevels] = useState([]);
-
-  const getTreeById = (trees, treeid) => {
-    const [tree] = trees.filter((tree) => tree.id === parseInt(treeid));
-    return tree;
-  };
-
-  const getLevels = (tree) => {
-    const levels = Object.keys(tree.data);
-    return levels;
-  };
+  const canvasRef = useRef();
+  const [offset, setOffset] = useState({});
 
   useEffect(() => {
-    const tree = getTreeById(trees, treeid);
-    setTree(tree);
-    setLevels(getLevels(tree));
+    const newOffset = canvasRef.current.getBoundingClientRect();
+    setOffset(newOffset);
+  }, [canvasRef, tree]);
+
+  useEffect(() => {
+    const currenttree = getTreeById(trees, treeid);
+    setTree(currenttree);
+    setLevels(getLevels(currenttree));
   }, [treeid, trees, tree]);
 
-  const canvasRef = useRef(null);
+  useEffect(() => {
+    console.log("LOG LEVELS", levels);
+    // dispatch(resetCoordinates());
+  }, [levels.length]);
+
+  useEffect(() => {
+    console.log("draw lines");
+    console.log("COORDS", coords);
+    drawLines(coords, canvasRef);
+  }, [coords]);
 
   return (
-    <div className="user-select-none">
+    <div className={`${container(levels || [])} user-select-none`}>
       <div className="d-flex justify-content-center relative">
         {levels.length > 0 &&
           levels.map((level) => (
+            //column
             <div
               key={level}
               className={`col-${
@@ -38,14 +57,17 @@ const Tree = ({ treeid }) => {
               } d-inline-block d-flex flex-column justify-content-around text-center`}
             >
               {tree.data[level].map((poke, index) => (
+                //cell
                 <div key={level + index}>
                   {poke.data ? (
-                    <TreeCell
+                    <TreeCellWrapper
                       poke={poke}
                       level={level}
+                      levels={levels}
                       index={index}
-                      treeId={tree.id}
-                    ></TreeCell>
+                      treeid={tree.id}
+                      offset={offset}
+                    ></TreeCellWrapper>
                   ) : (
                     <div className="card treeCell treeCellBg"></div>
                   )}

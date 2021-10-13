@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createSelector } from "reselect";
+import { offsetCoords } from "../utils/tree";
 
 const slice = createSlice({
   name: "ui",
@@ -7,6 +8,7 @@ const slice = createSlice({
     page: 1,
     dark: "light",
     expanded: false,
+    boxes: {},
     selectedIds: [],
     selectedTool: "inspect",
   },
@@ -32,6 +34,15 @@ const slice = createSlice({
     setSelectedTool: (ui, action) => {
       ui.selectedTool = action.payload;
     },
+    saveCoordinates: (ui, action) => {
+      const { coords, level, index, offset } = action.payload;
+      const { boxes } = ui;
+      boxes[level] = { ...boxes[level] };
+      boxes[level][index] = offsetCoords(coords, offset);
+    },
+    resetCoordinates: (ui, action) => {
+      ui.boxes = {};
+    },
   },
 });
 
@@ -51,6 +62,10 @@ export const getSelectedTool = createSelector(
   (state) => state.ui,
   (ui) => ui.selectedTool
 );
+export const getCoordinates = createSelector(
+  (state) => state.ui,
+  (ui) => ui.boxes
+);
 
 export default slice.reducer;
 export const {
@@ -60,4 +75,6 @@ export const {
   removeSelectedId,
   setSelectedId,
   setSelectedTool,
+  saveCoordinates,
+  resetCoordinates,
 } = slice.actions;

@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { fetchData, getCache } from "../../store/pokeapi";
 import SearchBar from "./searchBar";
 
-const SearchBarContainer = ({ small, colSize, onSearchbarChange }) => {
+const SearchBarContainer = ({ small, size, onSearch }) => {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [state, setState] = useState({ sprite: "", possibleGenders: [] });
@@ -33,12 +33,12 @@ const SearchBarContainer = ({ small, colSize, onSearchbarChange }) => {
 
   useEffect(() => {
     if (!state.sprite) return;
-    onSearchbarChange(state);
+    onSearch(state);
   }, [state]);
 
   return (
     <div>
-      <SearchBar handleChange={handleChange} colSize={colSize} />
+      <SearchBar handleChange={handleChange} size={size} />
     </div>
   );
 };

@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { getBreeders } from "../../store/breeders";
 import { ivClass, genderIcons } from "../../utils/remap";
 import { getSelectedIds } from "../../store/ui";
+import capitalize from "../../utils/capitalize";
 
 const BreederInspect = () => {
   const [url, setUrl] = useState("");
@@ -32,7 +33,7 @@ const BreederInspect = () => {
               <span className={selected.data.gender}>
                 {genderIcons[selected.data.gender].icon}
               </span>
-              {selected.data.name}
+              {capitalize(selected.data.name)}
             </h4>
           )}
         </div>

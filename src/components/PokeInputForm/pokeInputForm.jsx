@@ -38,7 +38,7 @@ const PokeInputForm = ({ onEnter }) => {
     resetForm();
   };
 
-  const onSearchbarChange = (data) => {
+  const onSearch = (data) => {
     const { name, eggGroups, possibleGenders } = data;
     setFormState({
       ...formState,
@@ -48,7 +48,7 @@ const PokeInputForm = ({ onEnter }) => {
     });
   };
 
-  const handleGenderSelect = (data) => {
+  const onGenderSelect = (data) => {
     setFormState({
       ...formState,
       gender: data,
@@ -58,11 +58,11 @@ const PokeInputForm = ({ onEnter }) => {
   return (
     <FormContext.Provider value={state}>
       <div className="card p-5">
-        <SearchBarContainer size={6} onSearchbarChange={onSearchbarChange} />
+        <SearchBarContainer size={6} onSearch={onSearch} />
         <PokeDisplay name={name} />
         {name && (
           <GenderSelect
-            handleGenderSelect={handleGenderSelect}
+            onGenderSelect={onGenderSelect}
             selectedGender={gender}
             possibleGenders={cache[name].possibleGenders}
           ></GenderSelect>
