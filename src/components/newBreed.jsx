@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { setTarget } from "../store/target";
 import { getBreeders } from "../store/breeders";
-import { addTree, getTrees } from "../store/trees";
+import { addTree } from "../store/trees";
 import { useSelector } from "react-redux";
 import http from "../services/httpService";
 import { createId } from "../utils/remap";
@@ -12,8 +12,6 @@ import { createId } from "../utils/remap";
 const NewBreedPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const trees = useSelector(getTrees);
-  console.log("TREES", JSON.stringify(trees));
   const breeders = useSelector(getBreeders);
 
   const onEnter = async (state) => {
@@ -34,7 +32,7 @@ const NewBreedPage = () => {
       dispatch(addTree({ data: data, id: id }));
       history.push(`/history/${id}`);
     } catch (error) {
-      console.log("errorm", error);
+      console.log("error", error);
     }
   };
   return (

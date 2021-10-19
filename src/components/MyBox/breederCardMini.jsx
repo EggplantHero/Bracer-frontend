@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { genderIcons, summarizeIvs } from "../../utils/remap";
 import { getImgSm } from "../../utils/pokeApi";
+import capitalize from "../../utils/capitalize";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addSelectedId,
@@ -9,23 +10,15 @@ import {
   setSelectedId,
   getSelectedTool,
 } from "../../store/ui";
-import capitalize from "../../utils/capitalize";
+import { getCache } from "../../store/pokeapi";
 
 const BreederCardMini = ({ breeder }) => {
   const dispatch = useDispatch();
+  const cache = useSelector(getCache);
   const selectedIds = useSelector(getSelectedIds);
   const selectedTool = useSelector(getSelectedTool);
   const { data, id } = breeder;
   const { name, ivs, gender } = data;
-  const [url, setUrl] = useState("");
-
-  useEffect(() => {
-    const setImg = async () => {
-      const url = await getImgSm(name);
-      setUrl(url);
-    };
-    setImg();
-  }, [name]);
 
   const handleSelection = () => {
     if (selectedTool === "inspect") {
@@ -54,7 +47,7 @@ const BreederCardMini = ({ breeder }) => {
           <span>{capitalize(name)}</span>
         </h6>
         <div>
-          <img src={url} alt="" className="pe-none"></img>
+          <img src={cache[name].spriteSm} alt="" className="pe-none"></img>
         </div>
         <h6>{summarizeIvs(ivs)}</h6>
       </button>

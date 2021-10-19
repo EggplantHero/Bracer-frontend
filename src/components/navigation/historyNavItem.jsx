@@ -1,31 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 import { summarizeIvs, getTargetFromTree } from "../../utils/remap";
-import { getImgSm } from "../../utils/pokeApi";
 import capitalize from "../../utils/capitalize";
+import { getCache } from "../../store/pokeapi";
 
 const HistoryNavItem = ({ tree }) => {
-  const [target, setTarget] = useState({});
-  const [img, setImg] = useState("");
-
-  useEffect(() => {
-    setTarget(getTargetFromTree(tree));
-    const fetchImg = async () => {
-      const url = await getImgSm(target.name);
-      setImg(url);
-    };
-    fetchImg(target.name);
-  }, [target, tree]);
+  const cache = useSelector(getCache);
+  const target = getTargetFromTree(tree);
+  const { name, ivs } = target;
 
   return (
     <div className="mx-5">
       <div className="d-flex justify-content-start">
         <div>
-          <img src={img} alt="" />
+          <img src={cache[name].spriteSm} alt="" />
         </div>
-        <span>{capitalize(target.name)}</span>
+        <span>{capitalize(name)}</span>
       </div>
       <div className="d-flex justify-content-center">
-        <span>{summarizeIvs(target.ivs)}</span>
+        <span>{summarizeIvs(ivs)}</span>
       </div>
     </div>
   );

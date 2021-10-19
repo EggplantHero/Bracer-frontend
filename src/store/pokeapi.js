@@ -6,6 +6,7 @@ import {
   formatEggs,
   parseGenderRate,
   getSprite,
+  heldItems,
 } from "../utils/pokeApi";
 
 //slice
@@ -14,7 +15,6 @@ const slice = createSlice({
   name: "pokeapi",
   initialState: {
     allPokes: {},
-    itemUrls: [],
     itemIcons: {},
     loading: false,
   },
@@ -48,13 +48,11 @@ const slice = createSlice({
       );
     },
     addBraces: (pokes, action) => {
-      const { itemUrls, itemIcons } = pokes;
-      itemUrls.push(action.payload.sprites.default);
-      if (itemUrls.length === 7) {
-        const stats = ["hp", "atk", "def", "spa", "spd", "spe", "nature"];
-        stats.map((stat, index) => (itemIcons[stat] = itemUrls[index]));
-        delete pokes.itemUrls;
-      }
+      const { itemIcons } = pokes;
+      const { name, sprites } = action.payload;
+      Object.assign(itemIcons, {
+        [heldItems[name]]: sprites.default,
+      });
     },
   },
 });
@@ -74,20 +72,13 @@ export const initializeState = () => (dispatch, getState) => {
     );
   }
   if (Object.keys(getState().pokeapi.itemIcons).length === 0) {
-    const braces = ["weight", "bracer", "belt", "lens", "band", "anklet"];
-    braces.map((brace) =>
+    Object.keys(heldItems).map((item) =>
       dispatch(
         apiCallBegan({
-          url: `/item/power-${brace}`,
+          url: `/item/${item}`,
           onSuccess: addBraces.type,
         })
       )
-    );
-    dispatch(
-      apiCallBegan({
-        url: `/item/everstone`,
-        onSuccess: addBraces.type,
-      })
     );
   }
 };
