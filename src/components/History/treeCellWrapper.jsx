@@ -2,22 +2,18 @@ import React, { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import TreeCell from "./treeCell";
 import { getCoordinates } from "../../utils/tree";
-import { saveCoordinates, resetCoordinates } from "../../store/ui";
+import { saveCoordinates } from "../../store/ui";
 
 const TreeCellWrapper = ({ poke, level, levels, treeid, index, offset }) => {
   const boxRef = useRef();
   const dispatch = useDispatch();
   const { breeder } = poke.data;
 
-  //   useEffect(() => {
-  //     dispatch(resetCoordinates());
-  //   }, [levels.length]);
-
   useEffect(() => {
     const coords = getCoordinates(boxRef);
     console.log(coords, level, index);
     dispatch(saveCoordinates({ coords, level, index, offset }));
-  }, [breeder]);
+  }, [levels]);
 
   return (
     <div ref={boxRef} className={`card treeCell ${breeder && "treeCellBg"}`}>

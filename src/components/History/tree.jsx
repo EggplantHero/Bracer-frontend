@@ -29,19 +29,17 @@ const Tree = ({ treeid }) => {
 
   useEffect(() => {
     const currenttree = getTreeById(trees, treeid);
+    console.log("SETTING TREE, SETTING LEVELS");
     setTree(currenttree);
     setLevels(getLevels(currenttree));
-  }, [treeid, trees, tree]);
+    // }, [treeid, trees, tree]);
+  }, [treeid]);
 
   useEffect(() => {
-    console.log("LOG LEVELS", levels);
-    // dispatch(resetCoordinates());
-  }, [levels.length]);
-
-  useEffect(() => {
-    console.log("draw lines");
-    console.log("COORDS", coords);
-    drawLines(coords, canvasRef);
+    if (Object.keys(coords).length) {
+      console.log("useEffect[coords], rendering lines...", coords);
+      drawLines(coords, canvasRef);
+    }
   }, [coords]);
 
   return (

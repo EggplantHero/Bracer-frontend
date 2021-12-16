@@ -5,7 +5,6 @@ export const getTreeById = (trees, treeid) => {
 
 export const getLevels = (tree) => {
   const levels = Object.keys(tree.data);
-  console.log(levels);
   return levels;
 };
 
