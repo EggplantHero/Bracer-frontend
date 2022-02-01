@@ -6,12 +6,10 @@ import TreeCellWrapper from "./treeCellWrapper";
 import {
   getLevels,
   getTreeById,
-  container,
   drawLines,
   offsetCoords,
 } from "../../utils/tree";
 import { useDispatch } from "react-redux";
-import TreeCell from "./treeCell";
 
 const Tree = ({ treeid }) => {
   const dispatch = useDispatch();
@@ -32,7 +30,6 @@ const Tree = ({ treeid }) => {
     console.log("SETTING TREE, SETTING LEVELS");
     setTree(currenttree);
     setLevels(getLevels(currenttree));
-    // }, [treeid, trees, tree]);
   }, [treeid]);
 
   useEffect(() => {
@@ -43,16 +40,15 @@ const Tree = ({ treeid }) => {
   }, [coords]);
 
   return (
-    <div className={`${container(levels || [])} user-select-none`}>
+    <div className={`container-fluid user-select-none`}>
       <div className="d-flex justify-content-center relative">
         {levels.length > 0 &&
           levels.map((level) => (
             //column
             <div
               key={level}
-              className={`col-${
-                12 / levels.length
-              } d-inline-block d-flex flex-column justify-content-around text-center`}
+              className={`col-${12 / levels.length}
+              d-inline-block d-flex flex-column justify-content-around text-center`}
             >
               {tree.data[level].map((poke, index) => (
                 //cell

@@ -16,7 +16,10 @@ const TreeCellWrapper = ({ poke, level, levels, treeid, index, offset }) => {
   }, [levels]);
 
   return (
-    <div ref={boxRef} className={`card treeCell ${breeder && "treeCellBg"}`}>
+    <div
+      ref={boxRef}
+      className={`card treeCell ${breeder && "treeCellBg"} mx-auto`}
+    >
       <TreeCell
         poke={poke}
         level={level}

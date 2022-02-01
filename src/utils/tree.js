@@ -8,10 +8,6 @@ export const getLevels = (tree) => {
   return levels;
 };
 
-export const container = (levels) => {
-  return levels.length > 3 ? "container-fluid" : "container";
-};
-
 export const getCoordinates = (boxref) => {
   let box = boxref.current.getBoundingClientRect();
   let { x, y, width, height } = box;
