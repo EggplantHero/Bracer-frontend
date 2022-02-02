@@ -41,7 +41,7 @@ const App = () => {
         <Route path="/my-box" component={MyBox}></Route>
         <Route path="/history/:treeid" component={History}></Route>
         <Route path="/not-found" component={NotFound}></Route>
-        <Redirect from="/" exact to="/new"></Redirect>
+        <Redirect from="/" exact to="/my-box"></Redirect>
         <Redirect to="/not-found"></Redirect>
       </Switch>
       <Footer></Footer>

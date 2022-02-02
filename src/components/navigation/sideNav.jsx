@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getSidebar } from "../../store/ui";
@@ -16,14 +16,14 @@ const SideNav = () => {
 
   const navItems = [
     {
-      url: "/new",
-      icon: <CgPokemon />,
-      text: "New Breed",
-    },
-    {
       url: "/my-box",
       icon: <FaBoxOpen />,
       text: "My Box",
+    },
+    {
+      url: "/new",
+      icon: <CgPokemon />,
+      text: "New Breed",
     },
     {
       url: `/history/${trees[0] ? trees[0].id : "/"}`,

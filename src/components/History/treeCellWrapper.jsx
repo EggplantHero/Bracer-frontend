@@ -4,16 +4,16 @@ import TreeCell from "./treeCell";
 import { getCoordinates } from "../../utils/tree";
 import { saveCoordinates } from "../../store/ui";
 
-const TreeCellWrapper = ({ poke, level, levels, treeid, index, offset }) => {
+const TreeCellWrapper = ({ poke, level, treeid, index, offset }) => {
   const boxRef = useRef();
   const dispatch = useDispatch();
   const { breeder } = poke.data;
 
   useEffect(() => {
     const coords = getCoordinates(boxRef);
-    console.log(coords, level, index);
+    console.log("coords", level, index, coords);
     dispatch(saveCoordinates({ coords, level, index, offset }));
-  }, [levels]);
+  }, [treeid]);
 
   return (
     <div

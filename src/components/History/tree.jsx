@@ -1,23 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { getTrees } from "../../store/trees";
-import { resetCoordinates, getCoordinates } from "../../store/ui";
+import { getCoordinates } from "../../store/ui";
 import TreeCellWrapper from "./treeCellWrapper";
-import {
-  getLevels,
-  getTreeById,
-  drawLines,
-  offsetCoords,
-} from "../../utils/tree";
-import { useDispatch } from "react-redux";
+import { getLevels, drawLines } from "../../utils/tree";
 
-const Tree = ({ treeid }) => {
-  const dispatch = useDispatch();
-  const trees = useSelector(getTrees);
-  const coords = useSelector(getCoordinates);
-  const [tree, setTree] = useState({});
-  const [levels, setLevels] = useState([]);
+const Tree = ({ tree }) => {
   const canvasRef = useRef();
+  const levels = getLevels(tree);
+  const coords = useSelector(getCoordinates);
   const [offset, setOffset] = useState({});
 
   useEffect(() => {
@@ -26,17 +16,7 @@ const Tree = ({ treeid }) => {
   }, [canvasRef, tree]);
 
   useEffect(() => {
-    const currenttree = getTreeById(trees, treeid);
-    console.log("SETTING TREE, SETTING LEVELS");
-    setTree(currenttree);
-    setLevels(getLevels(currenttree));
-  }, [treeid]);
-
-  useEffect(() => {
-    if (Object.keys(coords).length) {
-      console.log("useEffect[coords], rendering lines...", coords);
-      drawLines(coords, canvasRef);
-    }
+    drawLines(coords, canvasRef);
   }, [coords]);
 
   return (
@@ -57,7 +37,6 @@ const Tree = ({ treeid }) => {
                     <TreeCellWrapper
                       poke={poke}
                       level={level}
-                      levels={levels}
                       index={index}
                       treeid={tree.id}
                       offset={offset}
