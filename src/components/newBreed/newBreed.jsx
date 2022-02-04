@@ -1,18 +1,19 @@
 import React from "react";
-import PokeInputForm from "./PokeInputForm/pokeInputForm";
+import PokeInputForm from "../pokeInputForm/pokeInputForm";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
-import { setTarget } from "../store/target";
-import { getBreeders } from "../store/breeders";
-import { addTree } from "../store/trees";
+import { setTarget } from "../../store/target";
+import { getUnlockedBreeders } from "../../store/breeders";
+import { addTree } from "../../store/trees";
 import { useSelector } from "react-redux";
-import http from "../services/httpService";
-import { createId } from "../utils/remap";
+import http from "../../services/httpService";
+import { createId } from "../../utils/remap";
+import { resetCoordinates } from "../../store/ui";
 
 const NewBreedPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const breeders = useSelector(getBreeders);
+  const breeders = useSelector(getUnlockedBreeders);
 
   const onEnter = async (state) => {
     dispatch(setTarget(state));
@@ -30,7 +31,8 @@ const NewBreedPage = () => {
       const { data } = await http.post(url, payload, config);
       const id = createId();
       dispatch(addTree({ data: data, id: id }));
-      history.push(`/history/${id}`);
+      history.push(`/my-breeds/${id}`);
+      dispatch(resetCoordinates());
     } catch (error) {
       console.log("error", error);
     }

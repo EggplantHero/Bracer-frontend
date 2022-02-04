@@ -9,7 +9,8 @@ function getViewportSize() {
   if (width <= 768) return "sm";
   if (width <= 992) return "md";
   if (width <= 1200) return "lg";
-  return "xl";
+  if (width <= 1400) return "xl";
+  return "xxl";
 }
 
 function getGridSize() {
@@ -22,6 +23,8 @@ function getGridSize() {
     case "md":
       return 8;
     case "lg":
+      return 4;
+    case "xl":
       return 6;
     default:
       return 8;

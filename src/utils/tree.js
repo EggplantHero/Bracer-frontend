@@ -53,7 +53,8 @@ export function countChildren(tree) {
   return maxChildren;
 }
 
-export function drawLines(boxes, canvas) {
+export function drawLines(boxes, canvas, tree) {
+  const { data } = tree;
   const ctx = canvas.current.getContext("2d");
   fitToContainer(canvas.current);
   ctx.lineWidth = 1;
@@ -64,14 +65,14 @@ export function drawLines(boxes, canvas) {
     for (let i = 0; i < Object.keys(boxes[level]).length; i++) {
       for (let j = 0; j <= 1; j++) {
         ctx.strokeStyle = "grey";
-        let type = "breeder";
-        if (type === "breeder") {
+        let breeder = data[level - 1][i * 2 + j].data.breeder;
+        if (breeder) {
           ctx.shadowColor = lineColors.breeder;
         } else {
-          ctx.shadowColor = lineColors.empty;
+          ctx.shadowColor = lineColors.generated;
         }
         ctx.shadowBlur = 4;
-        ctx.shadowOffsetY = 3;
+        ctx.shadowOffsetY = 2;
         ctx.shadowOffsetX = 1;
         const start = {
           x: boxes[level - 1][i + 1].right,

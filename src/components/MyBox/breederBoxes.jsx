@@ -10,14 +10,16 @@ import {
   swap,
 } from "react-grid-dnd";
 import useViewport from "../../utils/viewport";
+import PageHandler from "./pageHandler";
+import SelectionTools from "./selectionTools";
 
 const BreederBoxes = ({ setSelected }) => {
   const dispatch = useDispatch(reorderBreeders);
   const breeders = useSelector(getBreeders);
   const [slicedBreeders, setSlicedBreeders] = useState([]);
   const [page, setPage] = useState(0);
-  const { gridSize } = useViewport();
   const pageSize = 24;
+  const { gridSize } = useViewport();
 
   const onChange = (sourceId, sourceIndex, targetIndex, targetId) => {
     const nextState = swap(
@@ -35,23 +37,14 @@ const BreederBoxes = ({ setSelected }) => {
     setSlicedBreeders(slicedArray);
   }, [page, breeders]);
 
-  const handlePageChange = (inc) => {
-    const pageCount = Math.ceil(breeders.length / pageSize);
-    let newPage = page + inc;
-    if (newPage < 0) return;
-    if (newPage > pageCount - 1) return;
-    setPage(newPage);
-  };
-
   return (
     <div>
       <GridContextProvider onChange={onChange}>
         <GridDropZone
           id="items"
-          className="d-flex justify-content-start"
           boxesPerRow={gridSize}
           rowHeight={82}
-          style={{ height: "350px" }}
+          style={{ height: (82 * pageSize) / gridSize }}
         >
           {slicedBreeders.map((breeder) => (
             <GridItem key={breeder.id}>
@@ -60,13 +53,14 @@ const BreederBoxes = ({ setSelected }) => {
           ))}
         </GridDropZone>
       </GridContextProvider>
-      {page !== 0 && (
-        <div>
-          <button onClick={() => handlePageChange(-1)}>-</button>
-          <p>Box #{page + 1}</p>
-          <button onClick={() => handlePageChange(1)}>+</button>
-        </div>
-      )}
+      <div className="d-flex justify-content-around">
+        <PageHandler
+          page={page}
+          setPage={setPage}
+          pageSize={pageSize}
+        ></PageHandler>
+        <SelectionTools />
+      </div>
     </div>
   );
 };

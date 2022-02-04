@@ -1,4 +1,4 @@
-body[data-theme=dark] {
+body[data-theme="dark"] {
   --display: none;
   --primary-color: rgb(47, 49, 54);
   --text-color: rgb(215, 213, 217);
@@ -15,7 +15,7 @@ body[data-theme=dark] {
   --treeCell-bg-color: rgb(82, 156, 94);
 }
 
-body[data-theme=light] {
+body[data-theme="light"] {
   --display: auto;
   --primary-color: rgb(237, 240, 244);
   --text-color: #111111;
@@ -79,7 +79,7 @@ div.card input:focus {
   background-color: var(--input-bg-color);
   border-color: var(--border-color);
 }
-div.card input[type=number]::-webkit-inner-spin-button {
+div.card input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
 div.card input:disabled {
@@ -87,7 +87,7 @@ div.card input:disabled {
   border-color: var(--nav-bg-color);
   color: var(--text-color-muted);
 }
-div.card input[type=range] {
+div.card input[type="range"] {
   background-color: var(--card-bg-color);
 }
 div.card .input-group-text-custom {

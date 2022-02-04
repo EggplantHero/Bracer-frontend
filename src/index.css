@@ -58,6 +58,12 @@ label {
   min-width: 160px;
   height: 230px;
 }
+.treeCellMini {
+  margin: 5px;
+  max-width: 264px;
+  min-width: 160px;
+  height: 50px;
+}
 .ivCell {
   height: 38px;
   padding: 0px;
@@ -124,9 +130,14 @@ nav {
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgb(184, 81, 98);
 }
+.outline-green,
+.outline-green:focus {
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgb(81, 184, 103);
+}
 
 .breederContainerMini {
-  width: 80px;
+  /* width: 88px; */
   height: 80px;
 }
 

@@ -2,10 +2,9 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addBreeder, removeBreeders } from "../../store/breeders";
 import { getSelectedIds, getSelectedTool, setSelectedId } from "../../store/ui";
-import PokeInputForm from "../PokeInputForm/pokeInputForm";
+import PokeInputForm from "../pokeInputForm/pokeInputForm";
 import BreederBoxes from "./breederBoxes";
 import BreederInspect from "./breederInspect";
-import SelectionTools from "./selectionTools";
 
 const MyBoxPage = () => {
   const dispatch = useDispatch();
@@ -29,7 +28,6 @@ const MyBoxPage = () => {
           <div className="col-12 col-lg-6">
             <p>Your box contents:</p>
             <BreederBoxes></BreederBoxes>
-            <SelectionTools />
             {selectedTool === "inspect" && <BreederInspect></BreederInspect>}
             {selectedTool === "delete" && (
               <button

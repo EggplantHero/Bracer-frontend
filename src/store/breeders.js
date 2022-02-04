@@ -12,6 +12,7 @@ const slice = createSlice({
       breeders.push({
         id: Date.now() + Math.floor(Math.random() * 100),
         data: action.payload,
+        locked: false,
       });
     },
     removeBreeder: (breeders, action) => {
@@ -19,6 +20,10 @@ const slice = createSlice({
     },
     removeBreeders: (breeders, action) => {
       return breeders.filter((breeder) => !action.payload.includes(breeder.id));
+    },
+    toggleLock: (breeders, action) => {
+      const breeder = breeders.find((breeder) => breeder.id === action.payload);
+      breeder.locked = !breeder.locked;
     },
   },
 });
@@ -28,6 +33,16 @@ export const getBreeders = createSelector(
   (breeders) => breeders
 );
 
+export const getUnlockedBreeders = createSelector(
+  (state) => state.entities.breeders,
+  (breeders) => breeders.filter((breeder) => breeder.locked === false)
+);
+
 export default slice.reducer;
-export const { reorderBreeders, addBreeder, removeBreeder, removeBreeders } =
-  slice.actions;
+export const {
+  reorderBreeders,
+  addBreeder,
+  removeBreeder,
+  removeBreeders,
+  toggleLock,
+} = slice.actions;

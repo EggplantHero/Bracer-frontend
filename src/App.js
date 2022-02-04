@@ -4,11 +4,12 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useDispatch, useSelector } from "react-redux";
 import { getMode, getSidebar, collapseSidebar } from "./store/ui";
 import "bootstrap/dist/css/bootstrap.css";
+import About from "./components/about/about";
 import Navbar from "./components/navigation/navbar";
 import SideNav from "./components/navigation/sideNav";
-import Target from "./components/newBreed";
-import MyBox from "./components/MyBox/myBoxPage";
-import History from "./components/History/history";
+import NewBreed from "./components/newBreed/newBreed";
+import MyBox from "./components/myBox/myBoxPage";
+import MyBreeds from "./components/myBreeds/myBreeds";
 import NotFound from "./components/notFound";
 import Footer from "./components/footer";
 import { initializeState } from "./store/pokeapi";
@@ -37,9 +38,10 @@ const App = () => {
         ></div>
       )}
       <Switch>
-        <Route path="/new" component={Target}></Route>
+        <Route path="/about" component={About}></Route>
         <Route path="/my-box" component={MyBox}></Route>
-        <Route path="/history/:treeid" component={History}></Route>
+        <Route path="/new" component={NewBreed}></Route>
+        <Route path="/my-breeds/:treeid" component={MyBreeds}></Route>
         <Route path="/not-found" component={NotFound}></Route>
         <Redirect from="/" exact to="/my-box"></Redirect>
         <Redirect to="/not-found"></Redirect>

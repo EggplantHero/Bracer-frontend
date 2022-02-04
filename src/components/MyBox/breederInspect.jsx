@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { getImg } from "../../utils/pokeApi";
 import { useSelector } from "react-redux";
 import capitalize from "../../utils/capitalize";
 import { ivClass, genderIcons } from "../../utils/remap";

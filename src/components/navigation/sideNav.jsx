@@ -1,34 +1,61 @@
-import React from "react";
+import React, { Fragment, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getSidebar } from "../../store/ui";
-import { CgPokemon } from "react-icons/cg";
 import { FaBoxOpen } from "react-icons/fa";
-import { BsClockHistory } from "react-icons/bs";
+import { MdCreateNewFolder } from "react-icons/md";
+import { CgPokemon } from "react-icons/cg";
+import { GrInfo } from "react-icons/gr";
 import { getTrees } from "../../store/trees";
-import HistoryNavItem from "./historyNavItem";
+import MyBreedsNavItem from "./MyBreedsNavItem";
 import { resetCoordinates } from "../../store/ui";
 
 const SideNav = () => {
   const expanded = useSelector(getSidebar);
   const trees = useSelector(getTrees);
   const dispatch = useDispatch();
+  const [selected, setSelected] = useState(0);
 
   const navItems = [
+    {
+      url: "/about",
+      icon: <GrInfo />,
+      text: "About",
+      rendercondition: true,
+      onClick: () => {
+        setSelected(0);
+        dispatch(resetCoordinates);
+      },
+    },
     {
       url: "/my-box",
       icon: <FaBoxOpen />,
       text: "My Box",
+      rendercondition: true,
+      onClick: () => {
+        setSelected(0);
+        dispatch(resetCoordinates);
+      },
     },
     {
       url: "/new",
-      icon: <CgPokemon />,
+      icon: <MdCreateNewFolder />,
       text: "New Breed",
+      rendercondition: true,
+      onClick: () => {
+        setSelected(0);
+        dispatch(resetCoordinates);
+      },
     },
     {
-      url: `/history/${trees[0] ? trees[0].id : "/"}`,
-      icon: <BsClockHistory />,
-      text: "History",
+      url: `/my-breeds/${trees[0] ? trees[0].id : "/"}`,
+      icon: <CgPokemon />,
+      text: "My Breeds",
+      rendercondition: trees[0],
+      onClick: () => {
+        setSelected(trees[0] && trees[0].id);
+        dispatch(resetCoordinates);
+      },
     },
   ];
 
@@ -37,30 +64,38 @@ const SideNav = () => {
       className={`navbar sidenav sidenav-${expanded ? "active" : "collapsed"}`}
     >
       <ul className="navbar-nav">
-        {navItems.map(({ url, icon, text }) => {
+        {navItems.map(({ url, icon, text, rendercondition, onClick }) => {
           return (
-            <NavLink
-              className="nav-item nav-link"
-              to={url}
-              key={url}
-              onClick={() => dispatch(resetCoordinates())}
-            >
-              <div className="mx-5 d-flex justify-content-start">
-                <span>{icon}</span>
-                <span className="mx-3">{text}</span>
-              </div>
-            </NavLink>
+            <Fragment key={url}>
+              {rendercondition && (
+                <NavLink
+                  className="nav-item nav-link"
+                  to={url}
+                  onClick={onClick}
+                >
+                  <div className="mx-5 d-flex justify-content-start">
+                    <span>{icon}</span>
+                    <span className="mx-3">{text}</span>
+                  </div>
+                </NavLink>
+              )}
+            </Fragment>
           );
         })}
         <div className="sidenav-overflow">
           {trees.map((tree) => (
             <NavLink
-              className="nav-item nav-link"
-              to={`/history/${tree.id}`}
+              className={`nav-item nav-link user-select-none ${
+                selected === tree.id && "disabled"
+              }`}
+              to={`/my-breeds/${tree.id}`}
               key={tree.id}
-              onClick={() => dispatch(resetCoordinates())}
+              onClick={() => {
+                setSelected(tree.id);
+                dispatch(resetCoordinates());
+              }}
             >
-              <HistoryNavItem tree={tree} />
+              <MyBreedsNavItem tree={tree} />
             </NavLink>
           ))}
         </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import { BsSearch, BsTrashFill } from "react-icons/bs";
+import { BsSearch, BsTrashFill, BsFillUnlockFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getSelectedTool,
@@ -10,31 +10,35 @@ import {
 const SelectionTools = () => {
   const dispatch = useDispatch();
   const selectedTool = useSelector(getSelectedTool);
+
+  const tools = [
+    { name: "inspect", color: "blue", flavor: "primary", icon: <BsSearch /> },
+    {
+      name: "lock",
+      color: "green",
+      flavor: "success",
+      icon: <BsFillUnlockFill />,
+    },
+    { name: "delete", color: "red", flavor: "danger", icon: <BsTrashFill /> },
+  ];
   return (
     <div>
       <h6>Selection tools:</h6>
-      <button
-        className={`btn btn-info mx-1 ${
-          selectedTool === "inspect" && "outline-blue"
-        }`}
-        onClick={() => {
-          dispatch(setSelectedTool("inspect"));
-          dispatch(setSelectedId(null));
-        }}
-      >
-        <BsSearch />
-      </button>
-      <button
-        className={`btn btn-danger mx-1 ${
-          selectedTool === "delete" && "outline-red"
-        }`}
-        onClick={() => {
-          dispatch(setSelectedTool("delete"));
-          dispatch(setSelectedId(null));
-        }}
-      >
-        <BsTrashFill />
-      </button>
+      {tools.map(({ name, color, flavor, icon }) => (
+        <button
+          className={`btn btn-${flavor} mx-1 ${
+            selectedTool === name && `outline-${color}`
+          }`}
+          key={name}
+          onClick={() => {
+            dispatch(setSelectedTool(name));
+            dispatch(setSelectedId(null));
+            console.log("selected tool:", selectedTool);
+          }}
+        >
+          {icon}
+        </button>
+      ))}
     </div>
   );
 };

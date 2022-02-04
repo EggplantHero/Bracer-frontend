@@ -6,7 +6,7 @@ import { getTrees, removeTree } from "../../store/trees";
 import { getTreeById } from "../../utils/tree";
 import { useState } from "react";
 
-const History = () => {
+const MyBreeds = () => {
   let { treeid } = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -37,4 +37,4 @@ const History = () => {
   );
 };
 
-export default History;
+export default MyBreeds;

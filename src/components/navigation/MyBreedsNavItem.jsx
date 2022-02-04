@@ -4,7 +4,7 @@ import { summarizeIvs, getTargetFromTree } from "../../utils/remap";
 import capitalize from "../../utils/capitalize";
 import { getCache } from "../../store/pokeapi";
 
-const HistoryNavItem = ({ tree }) => {
+const MyBreedsNavItem = ({ tree }) => {
   const cache = useSelector(getCache);
   const target = getTargetFromTree(tree);
   const { name, ivs } = target;
@@ -24,4 +24,4 @@ const HistoryNavItem = ({ tree }) => {
   );
 };
 
-export default HistoryNavItem;
+export default MyBreedsNavItem;
