@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import { getCache } from "../../store/pokeapi";
 import FormContext from "../../contexts/formContext";
 
-const PokeInputForm = ({ onEnter }) => {
+const PokeInputForm = ({ onEnter, prevent6x }) => {
   const cache = useSelector(getCache);
   const state = useState(initialState);
   const [formState, setFormState] = state;
@@ -17,7 +17,8 @@ const PokeInputForm = ({ onEnter }) => {
   const [valid, setValid] = useState(false);
 
   useEffect(() => {
-    const valid = validate(formState, schema);
+    var valid = validate(formState, schema);
+    valid = valid && valid6x();
     setValid(valid);
   }, [formState]);
 
@@ -53,6 +54,14 @@ const PokeInputForm = ({ onEnter }) => {
       ...formState,
       gender: data,
     });
+  };
+
+  var valid6x = () => {
+    if (!prevent6x) return true;
+    for (const property in formState.ivs) {
+      if (formState.ivs[property] == -1) return true;
+    }
+    return false;
   };
 
   return (

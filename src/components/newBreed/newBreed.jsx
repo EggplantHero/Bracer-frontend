@@ -43,7 +43,7 @@ const NewBreedPage = () => {
         {/* HEADERS */}
         <p className="my-4">New Breed</p>
         <p>Please specify the Pokemon you would like to breed as your goal:</p>
-        <PokeInputForm onEnter={onEnter}></PokeInputForm>
+        <PokeInputForm onEnter={onEnter} prevent6x={true}></PokeInputForm>
       </div>
     </div>
   );
